@@ -39,7 +39,7 @@ The flow diagram is given below
  - [ ] Set the cloud app credentials variable
 		 
 
-		    export. GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/*****-cloudstorage.json"
+		    export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/*****-cloudstorage.json"
 
  - [ ] Compile the code and export the dataflow template to cloud
 				
@@ -50,7 +50,14 @@ The flow diagram is given below
 --templateLocation=gs://gcdf_demo_test/templates/PasBillsSampleCompare-new  
 --region=us-central1-a  
 --gcpTempLocation=gs://gcdf_demo_test/temp" -Pdataflow-runner
+ - [ ] For Bigquery sample execute the following
 
+> mvn compile exec:java -Dexec.mainClass=com.clgx.tax.beam.pipelines.samples.PasBillsSampleCompareBigQuery -Dexec.args="--runner=DataflowRunner  
+--project=spheric-mesh-294917  
+--stagingLocation=gs://gcdf_demo_test/staging  
+--templateLocation=gs://gcdf_demo_test/templates/PasBillsSampleCompareBigQuery  
+--region=us-central1-a  
+--gcpTempLocation=gs://gcdf_demo_test/temp --tempLocation=gs://gcdf_demo_test/temp" -Pdataflow-runner
 
 # Execution Steps
 
