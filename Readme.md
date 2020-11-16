@@ -59,6 +59,14 @@ The flow diagram is given below
 --region=us-central1-a  
 --gcpTempLocation=gs://gcdf_demo_test/temp --tempLocation=gs://gcdf_demo_test/temp" -Pdataflow-runner
 
+ - [ ] For PasAmount Joins execute the following steps
+> mvn compile exec:java -Dexec.mainClass=com.clgx.tax.beam.pipelines.samples.PasDataJoinMultipleDataSets -Dexec.args="--runner=DataflowRunner  \
+--project=spheric-mesh-294917  \
+--stagingLocation=gs://gcdf_demo_test/staging  \
+--templateLocation=gs://gcdf_demo_test/templates/PasJoinMultipleTables \
+--region=us-central1-a  \
+--gcpTempLocation=gs://gcdf_demo_test/temp --tempLocation=gs://gcdf_demo_test/temp" -Pdataflow-runner
+
 # Execution Steps
 
  - Export file into the input folder (Please note that the file name must have a substring - PAS_PRCL_BILLS_copy)

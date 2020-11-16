@@ -161,6 +161,7 @@ public class PasBillsSampleCompareBigQuery {
             final TupleTag<BQPasBills> YesFileDataset2 = new TupleTag<>();
             PCollection<KV<String, CoGbkResult>> groupedCollection = KeyedPCollectionTuple
                        .of(TodayFileDataset1, TodayFile)
+
                        .and(YesFileDataset2, YesterdaysBQData)
                        .apply("Join-Data-Via-HashKeys",CoGroupByKey.create());
 
