@@ -1,27 +1,30 @@
 package com.clgx.tax.beam.pipelines.samples;
 
-import com.clgx.tax.data.model.BQPasBills;
 import com.clgx.tax.data.model.pas.PasBillAmt;
 import com.clgx.tax.data.model.pas.PasBills;
 import com.clgx.tax.data.model.pas.PasBillsInst;
 import com.clgx.tax.data.model.pas.PasLiens;
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.extensions.jackson.AsJsons;
 import org.apache.beam.sdk.io.TextIO;
+import org.apache.beam.sdk.io.elasticsearch.ElasticsearchIO;
 import org.apache.beam.sdk.options.Default;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.options.ValueProvider;
 import org.apache.beam.sdk.transforms.*;
-import org.apache.beam.sdk.transforms.display.DisplayData;
 import org.apache.beam.sdk.transforms.join.CoGbkResult;
 import org.apache.beam.sdk.transforms.join.CoGroupByKey;
 import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
-import org.apache.beam.sdk.values.*;
+import org.apache.beam.sdk.values.KV;
+import org.apache.beam.sdk.values.PCollection;
+import org.apache.beam.sdk.values.TupleTag;
+import org.apache.beam.sdk.values.TypeDescriptors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PasDataJoinMultipleDataSets {
-    static Logger log = LoggerFactory.getLogger(PasDataJoinMultipleDataSets.class);
+public class PasDataToElastic {
+    static Logger log = LoggerFactory.getLogger(PasDataToElastic.class);
     public static void main(String[] args) {
        PasBillsOptions options =
                 PipelineOptionsFactory.fromArgs(args).withValidation().as(PasBillsOptions.class);
@@ -258,6 +261,12 @@ public class PasDataJoinMultipleDataSets {
             }
         }))
                 .apply("WriteRecordstoFile",TextIO.write().withoutSharding().to(options.getOutputPasData()));
+        //write records to elasticsearch
+
+        output.apply("ConvertoJson", AsJsons.of(PasBillAmt.class))
+                .apply("write to elastic", ElasticsearchIO.write().withConnectionConfiguration(
+                        ElasticsearchIO.ConnectionConfiguration.create(new String[]{"http://10.128.15.219:9200"}, "pasdata", "amtrec"))
+                 .withMaxBatchSize(10000));
 
 
      // options.getOutputPasAggegation().get()+"_INSTALL1.csv";
