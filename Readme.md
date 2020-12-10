@@ -91,3 +91,16 @@ The flow diagram is given below
 > gcloud dataflow jobs run pasbills-first-run --gcs-location gs://gcdf_demo_test/templates/PasBillsSampleCompare --region us-central1 --num-workers 5 --staging-location gs://gcdf_demo_test/temp --parameters yesterdaysFile1=gs://gcdf_demo_test/files/input/yesterday_file_generate.csv,delOutput=gs://gcdf_demo_test/files/output/delete-deltas.csv,todaysFile1=gs://gcdf_demo_test/files/input/PAS_PRCL_BILLS_copy.csv,output=gs://gcdf_demo_test/files/output/update-deltas.csv
 
  
+# Setting up CoreLogic Environment
+
+ - Raise Jira ticket with the cloud team to enable DataFlow
+    https://sdlc.corelogic.com/browse/CLOUD-18640?filter=-2
+ - Raise Cloud ticket to add the google repos as trusted repositories
+    https://sdlc.corelogic.com/browse/CLOUD-19893
+    
+ - Once these 2 requests are completed then develop the dataflow jobs and export the dataflow templates to GCS
+ - Execute the template using the command syntax below :: please note that network , subnetwork, service account etc are mandatory
+ 
+ > gcloud dataflow jobs run test-job-16 --gcs-location=gs://test_spark_bucket/templates/WordCount.json --region=us-west1 --service-account-email=dataflow-service-account@clgx-dtetl-spark-sbx-d546.iam.gserviceaccount.com --subnetwork=https://www.googleapis.com/compute/v1/projects/clgx-network-sbx-77c3/regions/us-west1/subnetworks/clgx-app-us-w1-app-sbx-subnet --network=projects/clgx-network-sbx-77c3/global/networks/clgx-vpc-sbx  --staging-location=gs://test_spark_bucket/temp --num-workers=1 --max-workers=2 --parameters="inputFile=gs://test_spark_bucket/data/POCFiles/PAS_PRCL_BILL_INSTL_201907221406.csv,output=gs://test_spark_bucket/data/POCFiles/test-op.txt"  
+
+    
