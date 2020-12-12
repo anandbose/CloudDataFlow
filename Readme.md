@@ -80,6 +80,23 @@ The flow diagram is given below
 
 >curl -XGET 'http://localhost:9200/pasdata/_search?pretty=true' -H 'Content-Type: application/json' -d '{ "query": {  "match_all": {}  } }'
 
+- [] PAS POC CLGX
+>mvn compile exec:java -Dexec.mainClass=com.clgx.tax.beam.pipelines.samples.POCPasDataProcess -Dexec.args="--runner=DataflowRunner  \
+ --project=clgx-dtetl-spark-sbx-d546  \
+ --stagingLocation=gs://clgx_gcdf_demo_test/staging  \
+ --templateLocation=gs://clgx_gcdf_demo_test/templates/PasPOCTemplate \
+ --region=us-central1-a  \
+ --gcpTempLocation=gs://clgx_gcdf_demo_test/temp --tempLocation=gs://clgx_gcdf_demo_test/temp" -Pdataflow-runner
+
+- [] PAS POC Personal
+
+>mvn compile exec:java -Dexec.mainClass=com.clgx.tax.beam.pipelines.samples.POCPasDataProcess -Dexec.args="--runner=DataflowRunner  \
+ --project=spheric-mesh-294917  \
+ --stagingLocation=gs://gcdf_demo_test/staging  \
+ --templateLocation=gs://gcdf_demo_test/templates/PasPOCTemplate \
+ --region=us-central1-a  \
+ --gcpTempLocation=gs://gcdf_demo_test/temp --tempLocation=gs:/gcdf_demo_test/temp" -Pdataflow-runner
+
 # Execution Steps
 
  - Export file into the input folder (Please note that the file name must have a substring - PAS_PRCL_BILLS_copy)
@@ -101,6 +118,20 @@ The flow diagram is given below
  - Once these 2 requests are completed then develop the dataflow jobs and export the dataflow templates to GCS
  - Execute the template using the command syntax below :: please note that network , subnetwork, service account etc are mandatory
  
- > gcloud dataflow jobs run test-job-16 --gcs-location=gs://test_spark_bucket/templates/WordCount.json --region=us-west1 --service-account-email=dataflow-service-account@clgx-dtetl-spark-sbx-d546.iam.gserviceaccount.com --subnetwork=https://www.googleapis.com/compute/v1/projects/clgx-network-sbx-77c3/regions/us-west1/subnetworks/clgx-app-us-w1-app-sbx-subnet --network=projects/clgx-network-sbx-77c3/global/networks/clgx-vpc-sbx  --staging-location=gs://test_spark_bucket/temp --num-workers=1 --max-workers=2 --parameters="inputFile=gs://test_spark_bucket/data/POCFiles/PAS_PRCL_BILL_INSTL_201907221406.csv,output=gs://test_spark_bucket/data/POCFiles/test-op.txt"  
-
-    
+ > gcloud dataflow jobs run pas-poc-03 \
+      --gcs-location=gs://clgx_gcdf_demo_test/templates/PasPOCTemplate \
+      --region=us-west1 \
+      --service-account-email=dataflow-service-account@clgx-dtetl-spark-sbx-d546.iam.gserviceaccount.com \
+      --subnetwork=https://www.googleapis.com/compute/v1/projects/clgx-network-sbx-77c3/regions/us-west1/subnetworks/clgx-app-us-w1-app-sbx-subnet \
+      --network=projects/clgx-network-sbx-77c3/global/networks/clgx-vpc-sbx  \
+      --staging-location=gs://clgx_gcdf_demo_test/temp --num-workers=1--max-workers=11 \
+      --worker-machine-type=n2-standard-16 \
+      --parameters="filePrefix=gs://clgx_gcdf_demo_test/poc/input/-02003-20201207,outputFileName=gs://clgx_gcdf_demo_test/poc/output/out-02003-20201207"  
+ - Executing on perosnal cloud
+ 
+ > gcloud dataflow jobs run pas-poc-08 \
+       --gcs-location=gs://gcdf_demo_test/templates/PasPOCTemplate \
+       --region=us-west1 \
+       --staging-location=gs://gcdf_demo_test/temp --num-workers=3 --max-workers=10 \
+       --worker-machine-type=n1-standard-1 \
+       --parameters="filePrefix=gs://gcdf_demo_test/files/poc/input/-02003-20201207,outputFileName=gs://gcdf_demo_test/files/poc/output/out-02003-20201207"  
