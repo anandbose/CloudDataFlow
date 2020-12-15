@@ -14,9 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Parcel implements Serializable {
     private String prclKey;
+    private String billYear;
+
     private Address address;
-    private List<Installment> installments;
+    private String taxId;
+    private String stateCounty;
     private List<Owner> owners;
+    private List<Installment> installments;
+
 
 
 

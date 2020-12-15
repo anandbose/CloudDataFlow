@@ -4,17 +4,16 @@ import com.clgx.tax.data.model.poc.*;
 import com.clgx.tax.data.model.poc.output.*;
 import com.clgx.tax.mappers.poc.MaptoPasPrcl;
 import com.clgx.tax.mappers.poc.MaptoPrclOwn;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.extensions.jackson.AsJsons;
 import org.apache.beam.sdk.io.TextIO;
+import org.apache.beam.sdk.io.elasticsearch.ElasticsearchIO;
 import org.apache.beam.sdk.options.Default;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.options.ValueProvider;
-import org.apache.beam.sdk.transforms.DoFn;
-import org.apache.beam.sdk.transforms.Flatten;
-import org.apache.beam.sdk.transforms.ParDo;
-import org.apache.beam.sdk.transforms.SerializableFunction;
+import org.apache.beam.sdk.transforms.*;
 import org.apache.beam.sdk.transforms.join.CoGbkResult;
 import org.apache.beam.sdk.transforms.join.CoGroupByKey;
 import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
@@ -32,7 +31,10 @@ import java.util.List;
 
 public class POCPasDataProcess {
 
-
+   // static String elasticUrl = "http://10.128.15.219:9200";
+    static String elasticUrl = "https://cc317dd9125743c9a2f563cf4d48dd06.int-ece-main-green-proxy.elastic.int.idap.clgxdata.com:9243";
+    static String userName = "clgx_service";
+    static String elasticPassword = "clgx_service_r0ck$";
     static Logger log = LoggerFactory.getLogger(POCPasDataProcess.class);
     public static void main(String[] args) {
         pasPipelineOptions options =
@@ -48,7 +50,7 @@ public class POCPasDataProcess {
     public interface pasPipelineOptions extends PipelineOptions {
 
 
-        @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/PASTEMP/-02003-20201207")
+        @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/-02003-20201207")
         ValueProvider<String> getFilePrefix();
         void setFilePrefix(ValueProvider<String> fileName);
 
@@ -59,6 +61,9 @@ public class POCPasDataProcess {
         ValueProvider<String> getOutputFileName();
         void setOutputFileName(ValueProvider<String> fileName);
 
+        @Default.String("http://localhost:9200")
+        ValueProvider<String> getElasticUrl();
+        void setElasticUrl(ValueProvider<String> url);
     }
 
     public   static void runPasPipeline(pasPipelineOptions options)
@@ -109,7 +114,6 @@ public class POCPasDataProcess {
                     @Override
                     public String apply(String input) {
                         String[] fields = input.split("-");
-                        String dt = fields[2];
 
                         return fields[0]+pasPrclOwnPrefix+fields[1]+"_"+fields[2];
                     }
@@ -298,6 +302,7 @@ public class POCPasDataProcess {
                                 List<Owner>  ownerList = new ArrayList<Owner>();
                                 List<Installment> installmentList = new ArrayList<Installment>();
                                 opParcel.setPrclKey(parcel.getPRCL_KEY());
+                                opParcel.setStateCounty(parcel.getSTATE_ID()+parcel.getCNTY_ID());
                                 Address opAddress = new Address();
                                 opAddress.setStreetAddress(parcel.getSTRT_NBR_TXT()+" "+parcel.getSTRT_NM());
                                 opAddress.setCity(parcel.getCITY_NM());
@@ -307,6 +312,7 @@ public class POCPasDataProcess {
                                 //iterate liens
                                 for (PasLiens lien: PasLienrecs)
                                 {
+                                    opParcel.setTaxId(lien.getTAX_ID());
                                     if (parcel.getSOR_CD().equals(lien.getSOR_CD()))
                                     {
                                         //join Bills
@@ -316,7 +322,7 @@ public class POCPasDataProcess {
                                             )
                                             {
                                                 //join Bill Installments
-
+                                                opParcel.setBillYear(Bill.getTAX_BILL_BGN_YR());
                                                 for (PasBillsInst Inst: PasBillInstrecs)
                                                 {
                                                     if(
@@ -330,6 +336,11 @@ public class POCPasDataProcess {
                                                         Installment opInstallment = new Installment();
                                                         opInstallment.setInstallmentID(Inst.getINSTL_CD());
                                                         opInstallment.setInstallmentType(Inst.getPYMT_STAT_CD());
+                                                        opInstallment.setInstallmentUniqueKey(
+                                                                parcel.getPRCL_KEY() + "-" +lien.getLIEN_KEY() +"-"
+                                                                + Bill.getBILL_KEY() + "-"+ Inst.getPRCL_BILL_INSTL_KEY()
+
+                                                        );
                                                         //now add the amounts
                                                         List<Amount> amounts = new ArrayList<>();
                                                         for (PasBillAmt amount : PasAmtrecs)
@@ -412,9 +423,29 @@ public class POCPasDataProcess {
             }
 
         }));
-        opParcels.apply("ConvertoJson", AsJsons.of(Parcel.class))
-                        .apply("Write Records to File",TextIO.write().withoutSharding().to(options.getOutputFileName()));
 
+       PCollection<String> jsonString =  opParcels.apply("ConvertoJson", AsJsons.of(Parcel.class));
+                        jsonString.apply("Write Records to File",TextIO.write().withoutSharding().to(options.getOutputFileName()));
+
+        ElasticsearchIO.ConnectionConfiguration connectionConfiguration = null;
+          connectionConfiguration =ElasticsearchIO.ConnectionConfiguration.create(new String[]{elasticUrl}, "pas-poc-data", "prcls")
+                                        .withUsername(userName)
+                                            .withPassword(elasticPassword);
+
+        jsonString.apply("write to elastic", ElasticsearchIO.write().withConnectionConfiguration(connectionConfiguration)
+                .withIdFn(new ElasticsearchIO.Write.FieldValueExtractFn() {
+                    @Override
+                    public String apply(JsonNode input) {
+                        String prclKey = input.get("prclKey").asText();
+                        String taxId = input.get("taxId").asText();
+                        return prclKey+"-"+taxId;
+                    }
+                })
+                .withMaxBatchSize(10000));
+
+        /**
+         *  Write parcel data to Elastic , make sure that the doc id is unique
+         */
 
         /**
          * Convert to installment based output
@@ -439,10 +470,13 @@ public class POCPasDataProcess {
                      op.setPrclKey(prcl.getPrclKey());
                      op.setAddress(prcl.getAddress());
                      op.setOwners(prcl.getOwners());
+                     op.setStateCounty(prcl.getStateCounty());
                      op.setInstallmentID(installment.getInstallmentID());
                      op.setInstallmentType(installment.getInstallmentType());
                      op.setAmounts(installment.getAmounts());
                      op.setAmountTotals(installment.getAmountTotals());
+                     op.setInstallmentUniqueKey(installment.getInstallmentUniqueKey());
+                     op.setBillYear(prcl.getBillYear());
                      out.output(op);
                     // finalOp.add(op);
 
@@ -453,14 +487,30 @@ public class POCPasDataProcess {
 
         }));
       //  PCollectionList<OutputByInstallment> finalCollection = PCollectionList.of(opByInstallmentList);
-       opByInstallment.apply("ConvertoJson", AsJsons.of(OutputByInstallment.class))
-                .apply("Write installment Records to File",TextIO.write().withoutSharding().to(ValueProvider.NestedValueProvider.of(options.getOutputFileName(),
+        PCollection<String> jsonString1 =opByInstallment.apply("ConvertoJson", AsJsons.of(OutputByInstallment.class));
+        jsonString1.apply("Write installment Records to File",TextIO.write().withoutSharding().to(ValueProvider.NestedValueProvider.of(options.getOutputFileName(),
                         new SerializableFunction<String, String>() {
                             @Override
                             public String apply(String input) {
                                 return input+"-installment-";
                             }
                         })));
+        /*
+         Write to Elastic as well
+         */
+        ElasticsearchIO.ConnectionConfiguration connectionConfiguration2 = ElasticsearchIO.ConnectionConfiguration.create(new String[]{elasticUrl}, "pas-instl-poc-data", "installment")
+                    .withUsername(userName)
+                    .withPassword(elasticPassword);
+
+        jsonString1.apply("write to elastic", ElasticsearchIO.write().withConnectionConfiguration(connectionConfiguration2)
+                .withIdFn(new ElasticsearchIO.Write.FieldValueExtractFn() {
+                    @Override
+                    public String apply(JsonNode input) {
+
+                        return input.get("installmentUniqueKey").asText();
+                    }
+                })
+                .withMaxBatchSize(10000));
 
         /**
          * Run the pipeline

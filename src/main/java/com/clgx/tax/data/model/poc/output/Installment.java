@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Installment implements Serializable {
+    private String installmentUniqueKey;
     private String installmentID;
     private String installmentType;
   //  private Date installmentBeginDate;
