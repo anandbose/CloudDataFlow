@@ -1,11 +1,11 @@
 
 package com.clgx.tax.beam.pipelines.samples;
+
 import com.clgx.tax.data.model.poc.*;
 import com.clgx.tax.data.model.poc.output.*;
 import com.clgx.tax.mappers.poc.MaptoPasPrcl;
 import com.clgx.tax.mappers.poc.MaptoPrclOwn;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.beam.runners.dataflow.options.DataflowPipelineDebugOptions;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.extensions.jackson.AsJsons;
 import org.apache.beam.sdk.io.TextIO;
@@ -14,33 +14,31 @@ import org.apache.beam.sdk.options.Default;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.options.ValueProvider;
-import org.apache.beam.sdk.transforms.*;
+import org.apache.beam.sdk.transforms.DoFn;
+import org.apache.beam.sdk.transforms.ParDo;
+import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.transforms.join.CoGbkResult;
 import org.apache.beam.sdk.transforms.join.CoGroupByKey;
 import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
-import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.TupleTag;
-import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.DateFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class POCPasDataProcess {
+public class POCPasDataProcessLocal {
 
-   // static String elasticUrl = "http://10.128.15.219:9200";
-    static String elasticUrl = "https://cc317dd9125743c9a2f563cf4d48dd06.int-ece-main-green-proxy.elastic.int.idap.clgxdata.com:9243";
-    static String userName = "clgx_service";
-    static String elasticPassword = "clgx_service_r0ck$";
-    static Logger log = LoggerFactory.getLogger(POCPasDataProcess.class);
+    static String elasticUrl = "http://10.128.15.219:9200";
+   // static String elasticUrl = "https://cc317dd9125743c9a2f563cf4d48dd06.int-ece-main-green-proxy.elastic.int.idap.clgxdata.com:9243";
+   // static String userName = "clgx_service";
+   // static String elasticPassword = "clgx_service_r0ck$";
+    static Logger log = LoggerFactory.getLogger(POCPasDataProcessLocal.class);
     public static void main(String[] args) {
         pasPipelineOptions options =
                 PipelineOptionsFactory.fromArgs(args).withValidation().as(pasPipelineOptions.class);
-        options.as(DataflowPipelineDebugOptions.class).setNumberOfWorkerHarnessThreads(1);
 
      //options.setFileName(ValueProvider.StaticValueProvider.of(options.getFilePrefix().get()+options.getStateCounty().get()+"_"+options.getDefaultDate().get()));
         //   options.setFileName(ValueProvider.StaticValueProvider.of("/Users/anbose/MyApplications/SparkPOCFiles/PAS/PRCL_STCN"+"02003"+"_"+"20201207"));
@@ -52,16 +50,14 @@ public class POCPasDataProcess {
     public interface pasPipelineOptions extends PipelineOptions {
 
 
-      //  @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/-02003-20201207")
-      @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/-04019-20201216")
+        @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/-02003-20201207")
         ValueProvider<String> getFilePrefix();
         void setFilePrefix(ValueProvider<String> fileName);
 
         ValueProvider<String> getFileName();
         void setFileName(ValueProvider<String> fileName);
 
-      //  @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/out-02003-20201207")
-      @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/output-0409-20201216")
+        @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/out-02003-20201207")
         ValueProvider<String> getOutputFileName();
         void setOutputFileName(ValueProvider<String> fileName);
 
@@ -74,7 +70,7 @@ public class POCPasDataProcess {
     {
 
         Pipeline p1 = Pipeline.create(options);
-        String delimiter="\\|";
+        String delimiter="|";
         /**
          * Read the PAS Parcels and store data in pcollection
          */
@@ -433,8 +429,9 @@ public class POCPasDataProcess {
 
         ElasticsearchIO.ConnectionConfiguration connectionConfiguration = null;
           connectionConfiguration =ElasticsearchIO.ConnectionConfiguration.create(new String[]{elasticUrl}, "pas-poc-data", "prcls")
-                                        .withUsername(userName)
-                                            .withPassword(elasticPassword);
+                                   //     .withUsername(userName)
+                                     //       .withPassword(elasticPassword)
+          ;
 
         jsonString.apply("write to elastic", ElasticsearchIO.write().withConnectionConfiguration(connectionConfiguration)
                 .withIdFn(new ElasticsearchIO.Write.FieldValueExtractFn() {
@@ -444,8 +441,8 @@ public class POCPasDataProcess {
                         String taxId = input.get("taxId").asText();
                         return prclKey+"-"+taxId;
                     }
-                }).withRetryConfiguration(ElasticsearchIO.RetryConfiguration.create(10,Duration.standardSeconds(60)))
-                .withMaxBatchSize(5000));
+                })
+                .withMaxBatchSize(10000));
 
         /**
          *  Write parcel data to Elastic , make sure that the doc id is unique
@@ -503,8 +500,9 @@ public class POCPasDataProcess {
          Write to Elastic as well
          */
         ElasticsearchIO.ConnectionConfiguration connectionConfiguration2 = ElasticsearchIO.ConnectionConfiguration.create(new String[]{elasticUrl}, "pas-instl-poc-data", "installment")
-                    .withUsername(userName)
-                    .withPassword(elasticPassword);
+                  //  .withUsername(userName)
+                   // .withPassword(elasticPassword)
+        ;
 
         jsonString1.apply("write to elastic", ElasticsearchIO.write().withConnectionConfiguration(connectionConfiguration2)
                 .withIdFn(new ElasticsearchIO.Write.FieldValueExtractFn() {
@@ -513,8 +511,8 @@ public class POCPasDataProcess {
 
                         return input.get("installmentUniqueKey").asText();
                     }
-                }).withRetryConfiguration(ElasticsearchIO.RetryConfiguration.create(10,Duration.standardSeconds(60)))
-                .withMaxBatchSize(5000));
+                })
+                .withMaxBatchSize(10000));
 
         /**
          * Run the pipeline

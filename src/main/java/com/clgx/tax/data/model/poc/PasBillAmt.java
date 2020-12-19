@@ -1,15 +1,13 @@
 package com.clgx.tax.data.model.poc;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class PasBillAmt implements Serializable {
     private String year;
     private String PRCL_KEY;

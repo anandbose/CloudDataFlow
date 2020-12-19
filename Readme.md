@@ -124,6 +124,9 @@ The flow diagram is given below
     https://sdlc.corelogic.com/browse/CLOUD-18640?filter=-2
  - Raise Cloud ticket to add the google repos as trusted repositories
     https://sdlc.corelogic.com/browse/CLOUD-19893
+ - Raise Cloud ticket to open firewall for all dataflow environments , 
+ this will enable dataflow jobs to communicate cross cluster
+ https://sdlc.corelogic.com/browse/CLOUD-20263
     
  - Once these 2 requests are completed then develop the dataflow jobs and export the dataflow templates to GCS
  - Execute the template using the command syntax below :: please note that network , subnetwork, service account etc are mandatory

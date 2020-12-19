@@ -1,8 +1,5 @@
 package com.clgx.tax.data.model.poc;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -10,7 +7,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@ToString
 public class PasLiens implements Serializable {
  private String PRCL_KEY;
  private String  SOR_CD;

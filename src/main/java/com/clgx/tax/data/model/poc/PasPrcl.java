@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@ToString
 public class PasPrcl implements Serializable {
 
     private String  PRCL_KEY;

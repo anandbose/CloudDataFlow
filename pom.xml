@@ -483,6 +483,11 @@
             <artifactId>beam-sdks-java-io-elasticsearch</artifactId>
             <version>2.25.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.beam</groupId>
+            <artifactId>beam-runners-google-cloud-dataflow-java</artifactId>
+            <version>2.26.0</version>
+        </dependency>
 
     </dependencies>
 </project>
