@@ -1,9 +1,6 @@
 package com.clgx.tax.data.model.poc.output;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,8 +8,12 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Address implements Serializable {
+    private  String unitNumber;
+    private String streetDirection;
     private String streetAddress;
     private String city;
     private String postalCode;
+    private String countyName;
 }

@@ -88,6 +88,10 @@ public class MaptoPasPrcl {
                     case 71:obj.setLAST_UPDT_SRC_ID(arr[i]);break;
                     case 72:obj.setLAST_UPDT_TS(arr[i]);break;
                     case 73:obj.setLAST_UPDT_USER_ID(arr[i]);break;
+                    case 74:obj.setTAX_SERV_AS_OF_DT(arr[i]);break;
+
+
+                    case 75:obj.setClipNumber(arr[i]);break;
 
                 }
             }

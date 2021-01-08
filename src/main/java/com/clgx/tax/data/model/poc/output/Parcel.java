@@ -1,9 +1,6 @@
 package com.clgx.tax.data.model.poc.output;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,16 +9,22 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Parcel implements Serializable {
+@ToString
+public class Parcel implements Serializable,Cloneable {
     private String prclKey;
     private String billYear;
-
+    private String clipNumber;
     private Address address;
     private String taxId;
     private String stateCounty;
     private List<Owner> owners;
     private List<Installment> installments;
 
+    public Object clone() throws
+            CloneNotSupportedException
+    {
+        return super.clone();
+    }
 
 
 

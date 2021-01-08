@@ -1,4 +1,5 @@
-package com.clgx.tax.data.model.pas;
+package
+        com.clgx.tax.data.model.pas;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

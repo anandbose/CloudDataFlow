@@ -1,11 +1,12 @@
 
 package com.clgx.tax.beam.pipelines.samples;
+import com.clgx.tax.beam.pipelines.poc.sdp.HttpWriter;
 import com.clgx.tax.data.model.poc.*;
 import com.clgx.tax.data.model.poc.output.*;
 import com.clgx.tax.mappers.poc.MaptoPasPrcl;
 import com.clgx.tax.mappers.poc.MaptoPrclOwn;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.beam.runners.dataflow.options.DataflowPipelineDebugOptions;
+//import org.apache.beam.runners.dataflow.options.DataflowPipelineDebugOptions;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.extensions.jackson.AsJsons;
 import org.apache.beam.sdk.io.TextIO;
@@ -18,31 +19,29 @@ import org.apache.beam.sdk.transforms.*;
 import org.apache.beam.sdk.transforms.join.CoGbkResult;
 import org.apache.beam.sdk.transforms.join.CoGroupByKey;
 import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
-
+import org.apache.beam.sdk.transforms.windowing.*;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
-import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.TupleTag;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.text.DateFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class POCPasDataProcess {
+public class POCPasDataWindowProcess {
 
    // static String elasticUrl = "http://10.128.15.219:9200";
     static String elasticUrl = "https://cc317dd9125743c9a2f563cf4d48dd06.int-ece-main-green-proxy.elastic.int.idap.clgxdata.com:9243";
     static String userName = "clgx_service";
     static String elasticPassword = "clgx_service_r0ck$";
-    static Logger log = LoggerFactory.getLogger(POCPasDataProcess.class);
+    static Logger log = LoggerFactory.getLogger(POCPasDataWindowProcess.class);
     public static void main(String[] args) {
         pasPipelineOptions options =
                 PipelineOptionsFactory.fromArgs(args).withValidation().as(pasPipelineOptions.class);
-        options.as(DataflowPipelineDebugOptions.class).setNumberOfWorkerHarnessThreads(2);
+      //  options.as(DataflowPipelineDebugOptions.class).setNumberOfWorkerHarnessThreads(2);
 
      //options.setFileName(ValueProvider.StaticValueProvider.of(options.getFilePrefix().get()+options.getStateCounty().get()+"_"+options.getDefaultDate().get()));
         //   options.setFileName(ValueProvider.StaticValueProvider.of("/Users/anbose/MyApplications/SparkPOCFiles/PAS/PRCL_STCN"+"02003"+"_"+"20201207"));
@@ -81,17 +80,17 @@ public class POCPasDataProcess {
          * Read the PAS Parcels and store data in pcollection
          */
 
-        String pasPrclPrefix = "PAS_PARCEL_CLIPPED";
+        String pasPrclPrefix = "PAS_PRCL_STCN";
 
         PCollection<KV<String, PasPrcl>> parcels = p1.apply("Read PAS Parcels", TextIO.read().from(
-                ValueProvider.NestedValueProvider.of(options.getOutputFileName(),  new SerializableFunction<String, String>()
+                ValueProvider.NestedValueProvider.of(options.getFilePrefix(),  new SerializableFunction<String, String>()
                 {
                     @Override
                     public String apply(String input) {
                         String[] fields = input.split("-");
                         String dt = fields[2];
 
-                        return input+"-"+pasPrclPrefix;
+                        return fields[0]+pasPrclPrefix+fields[1]+"_"+fields[2];
                     }
                 })
                 )
@@ -108,7 +107,36 @@ public class POCPasDataProcess {
         ));
 
 
-       /**
+        /**
+         * Clip the parcel data
+         * Creat window as well
+         */
+
+        Duration windowDuration = Duration.standardHours(1);
+        Window<KV<String, PasPrcl>> window =
+                Window.<KV<String, PasPrcl>>into(FixedWindows.of(windowDuration))
+                        //Window.<KV<String, PasPrcl>>into(new GlobalWindows())
+                                                   .triggering(Never.ever())
+                                                    .accumulatingFiredPanes()
+                                                    .withAllowedLateness(Duration.standardSeconds(40));
+        PCollection<KV<String, PasPrcl>> clippedParcels = parcels.apply(window).apply("Clip the parcels",new HttpWriter<>());
+
+
+        //Convert clipped to a parcel collection
+
+
+
+        /*write clipped data to file*/
+
+        clippedParcels.apply("write to file afterflatteing" , MapElements.via(new SimpleFunction<KV<String, PasPrcl>, String>() {
+                    @Override
+                    public String apply(KV<String, PasPrcl> input) {
+                        return (input.getValue().getPRCL_KEY()+"-------"+input.getValue().getClipNumber());
+                    }
+                })
+
+        ).apply("writeTofile",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/Clipinfo.txt")));
+        /**
          * Read the PAS Parcel owner and store data in pcollection
          */
 
@@ -422,9 +450,78 @@ public class POCPasDataProcess {
 
                 })
                 );
+/**
+ * Convert the output to a windowed output
+ */
+        Window<KV<String, Parcel>> OpWindow =
+                Window.<KV<String, Parcel>>into(FixedWindows.of(windowDuration))
+             //   Window.<KV<String, Parcel>>into(new GlobalWindows())
+                        .triggering(Never.ever())
+                .accumulatingFiredPanes()
+                .withAllowedLateness(Duration.standardSeconds(40));
+        PCollection<KV<String, Parcel>> windowedOPParcel = opParcelwiId
+
+          /*      .apply("Add timestamp",ParDo.of(new DoFn<KV<String, Parcel>, KV<String, Parcel>>() {
+                    @ProcessElement
+                    public void addTimestamp(@Element KV<String, Parcel> input, OutputReceiver <KV<String, Parcel>> out){
+                        out.outputWithTimestamp(input,Instant.now().plus(Duration.standardSeconds(20)));
+                    }
+                }))*/
+                .apply("Applytimestamos",WithTimestamps.of((KV<String, Parcel> input)-> Instant.now()))
+                .apply(OpWindow);
+        windowedOPParcel.apply(MapElements.via(new SimpleFunction<KV<String, Parcel>,Parcel>(){
+            @Override
+            public Parcel apply(KV<String,Parcel> prcl)
+            {
+                return prcl.getValue();
+            }
+        })).apply("ConvertoJson", AsJsons.of(Parcel.class))
+        .apply("Write Records to File",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/clip-output.txt")));
 
 
+        /**Join the above with clipped parcel
+         *
+         *
+         */
+        final TupleTag<Parcel> opprclTuple = new TupleTag<>();
+        final TupleTag<PasPrcl> clippedTuple = new TupleTag<>();
 
+        PCollection<KV<String, CoGbkResult>> WindowedJoin = KeyedPCollectionTuple
+                .of(opprclTuple,windowedOPParcel)
+                .and(clippedTuple,clippedParcels)
+                .apply("Join-Data-Via-PRCLkey-Windowed", CoGroupByKey.create());
+
+
+        /**
+         *
+         * Get the parcels from the joined collection
+         */
+
+        PCollection<Parcel> opParcelClipped = WindowedJoin.apply(
+                "iterate through the clips",ParDo.of(new DoFn<KV<String, CoGbkResult>, Parcel>() {
+                    @ProcessElement
+                    public void getFinal(@Element KV<String, CoGbkResult> input , OutputReceiver<Parcel> out) {
+                        Iterable<PasPrcl> PasPrclrecs = input.getValue().getAll(clippedTuple);
+                        Iterable<Parcel> Parcelrecs = input.getValue().getAll(opprclTuple);
+                          log.info("Joined the clipped parcels ......:::clippedParcels::::"+PasPrclrecs.spliterator().estimateSize());
+                          log.info("Parcel key is ::"+input.getKey()+"::");
+                        for (Parcel prcl : Parcelrecs)
+                        {
+                            log.info("Got Prcl::"+prcl.getPrclKey());
+                          //  log.info("Joined the clipped parcels ......:::clippedParcels::::"+PasPrclrecs.spliterator().estimateSize());
+
+                            for (PasPrcl pasPrcl: PasPrclrecs)
+                            {
+                                log.info("Got PasPrcl::"+prcl.getPrclKey());
+
+                                prcl.setClipNumber(pasPrcl.getClipNumber());
+                                out.outputWithTimestamp(prcl, Instant.now());
+                                log.info("Clipped parcel is::"+prcl.toString());
+                            }
+                        }
+                    }
+                })
+        );
 
 
         /***
@@ -439,7 +536,7 @@ public class POCPasDataProcess {
 
         }));
 
-       PCollection<String> jsonString = opParcels.apply("ConvertoJson", AsJsons.of(Parcel.class));
+       PCollection<String> jsonString =  opParcels.apply("ConvertoJson", AsJsons.of(Parcel.class));
                         jsonString.apply("Write Records to File",TextIO.write().withoutSharding().to(options.getOutputFileName()));
 
         ElasticsearchIO.ConnectionConfiguration connectionConfiguration = null;

@@ -1,9 +1,6 @@
 package com.clgx.tax.data.model.poc.output;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Installment implements Serializable {
     private String installmentUniqueKey;
     private String installmentID;
