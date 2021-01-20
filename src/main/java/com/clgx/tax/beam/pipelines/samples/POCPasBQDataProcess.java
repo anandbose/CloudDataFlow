@@ -35,18 +35,10 @@ import java.util.List;
 public class POCPasDataProcess {
 
    // static String elasticUrl = "http://10.128.15.219:9200";
-
-    /***
-     * Add the elastic search credentials
-     * **/
     static String elasticUrl = "https://cc317dd9125743c9a2f563cf4d48dd06.int-ece-main-green-proxy.elastic.int.idap.clgxdata.com:9243";
     static String userName = "clgx_service";
     static String elasticPassword = "clgx_service_r0ck$";
     static Logger log = LoggerFactory.getLogger(POCPasDataProcess.class);
-
-
-    /**Main program where the pipeline options and the pipeline initialized**/
-
     public static void main(String[] args) {
         pasPipelineOptions options =
                 PipelineOptionsFactory.fromArgs(args).withValidation().as(pasPipelineOptions.class);
@@ -59,14 +51,10 @@ public class POCPasDataProcess {
 
     }
 
-    /**
-     * Pipeline options with the classic template , this includes the data which can be passed from commandline and only
-     * variables which can be substituted as Valueproviders .
-     * **/
-
     public interface pasPipelineOptions extends PipelineOptions {
 
 
+      //  @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/-02003-20201207")
       @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/-04019-20201216")
         ValueProvider<String> getFilePrefix();
         void setFilePrefix(ValueProvider<String> fileName);
@@ -74,6 +62,7 @@ public class POCPasDataProcess {
         ValueProvider<String> getFileName();
         void setFileName(ValueProvider<String> fileName);
 
+      //  @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/out-02003-20201207")
       @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/output-0409-20201216")
         ValueProvider<String> getOutputFileName();
         void setOutputFileName(ValueProvider<String> fileName);
@@ -89,7 +78,7 @@ public class POCPasDataProcess {
         Pipeline p1 = Pipeline.create(options);
         String delimiter="\\|";
         /**
-         * Read the PAS Parcels (Clipped) and store data in pcollection
+         * Read the PAS Parcels and store data in pcollection
          */
 
         String pasPrclPrefix = "PAS_PARCEL_CLIPPED";
@@ -454,7 +443,7 @@ public class POCPasDataProcess {
                         jsonString.apply("Write Records to File",TextIO.write().withoutSharding().to(options.getOutputFileName()));
 
         ElasticsearchIO.ConnectionConfiguration connectionConfiguration = null;
-        connectionConfiguration =ElasticsearchIO.ConnectionConfiguration.create(new String[]{elasticUrl}, "pas-poc-data", "prcls")
+          connectionConfiguration =ElasticsearchIO.ConnectionConfiguration.create(new String[]{elasticUrl}, "pas-poc-data", "prcls")
                                         .withUsername(userName)
                                             .withPassword(elasticPassword);
 
@@ -520,6 +509,7 @@ public class POCPasDataProcess {
 
 
 
+      //  PCollectionList<OutputByInstallment> finalCollection = PCollectionList.of(opByInstallmentList);
         PCollection<String> jsonString1 =opByInstallment.apply("ConvertoJson", AsJsons.of(OutputByInstallment.class));
         jsonString1.apply("Write installment Records to File",TextIO.write().withoutSharding().to(ValueProvider.NestedValueProvider.of(options.getOutputFileName(),
                         new SerializableFunction<String, String>() {
