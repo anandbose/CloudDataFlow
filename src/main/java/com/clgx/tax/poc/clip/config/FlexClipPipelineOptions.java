@@ -24,5 +24,9 @@ public interface FlexClipPipelineOptions extends PipelineOptions {
     String getHttpUrl();
     void setHttpUrl(String url);
 
+    @Default.String("apikey")
+    String getApiKey();
+    void setApiKey(String apiKey);
+
 
 }

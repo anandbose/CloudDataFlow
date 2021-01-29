@@ -53,14 +53,16 @@ mvn compile exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFle
 --maxNumWorkers=10 \
 --filePrefix=gs://gcdf_dev_test/input/-04019-20201218 \
 --outputFileName=gs://gcdf_dev_test/output/out-20210121-04019  \
---httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn"
+--httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn \
+--apiKey=xAbaGhS2orRCICWSAYiKXfBUHBrY1S90"
 
 
 local runer
 
 mvn compile exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
 -Dexec.args=" \
---httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn"
+--httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn \
+--apiKey=xAbaGhS2orRCICWSAYiKXfBUHBrY1S90"
 
 
 

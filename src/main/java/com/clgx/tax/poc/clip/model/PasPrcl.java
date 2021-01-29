@@ -88,6 +88,7 @@ public class PasPrcl implements Serializable,Cloneable {
     private String  TAX_SERV_AS_OF_DT;
     private String  clipNumber;
     private String  url;
+    private String  apiKey;
 
     public Object clone()throws CloneNotSupportedException{
         return (PasPrcl)super.clone();

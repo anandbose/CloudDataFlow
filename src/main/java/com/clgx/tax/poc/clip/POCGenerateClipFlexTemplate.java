@@ -43,6 +43,7 @@ public class POCGenerateClipFlexTemplate {
         String pasPrclPrefix = "PAS_PRCL_STCN";
         log.info("The HTTP url is "+options.getHttpUrl());
         String HttpUrl = options.getHttpUrl();
+        String apiKey = options.getApiKey();
 
         PCollection<KV<String, PasPrcl>> parcels = p1.apply("Read PAS Parcels", TextIO.read().from(
                 ValueProvider.NestedValueProvider.of(ValueProvider.StaticValueProvider.of(options.getFilePrefix()),  new SerializableFunction<String, String>()
@@ -62,7 +63,7 @@ public class POCGenerateClipFlexTemplate {
                     public void processElement(@Element String Input, OutputReceiver<KV<String, PasPrcl>> out) {
                         String[] fields = Input.split(delimiter);
 
-                        PasPrcl obj = new MaptoPasPrcl().maptoprcl(fields,HttpUrl);
+                        PasPrcl obj = new MaptoPasPrcl().maptoprcl(fields,HttpUrl,apiKey);
                         KV<String,PasPrcl> kvObj = KV.of(obj.getPRCL_KEY(),obj);
                         log.info("Current time is::"+Instant.now());
                         out.outputWithTimestamp(kvObj,Instant.now());
@@ -70,6 +71,7 @@ public class POCGenerateClipFlexTemplate {
                 }
         )).apply("Filter only TXA records",Filter.by((SerializableFunction<KV<String, PasPrcl>, Boolean>) input -> {
             PasPrcl prcl = input.getValue();
+
             if (prcl.getSOR_CD().equals("TXA"))
                 return true;
             else

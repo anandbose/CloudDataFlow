@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class MaptoPasPrcl {
     Logger log = LoggerFactory.getLogger(MaptoPasPrcl.class);
-    public PasPrcl maptoprcl(String[] arr,String url)
+    public PasPrcl maptoprcl(String[] arr,String url,String apiKey)
     {
         PasPrcl obj = new PasPrcl();
         for (int i=0;i<arr.length;i++)
@@ -100,6 +100,7 @@ public class MaptoPasPrcl {
 
      //   obj.setTAX_SERV_AS_OF_DT(arr[74]);
         obj.setUrl(url);
+        obj.setApiKey(apiKey);
         log.info("--PAS PARCEL--"+obj.toString());
         return obj;
     }

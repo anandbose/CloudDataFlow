@@ -22,7 +22,7 @@ public class SynchHttpClient {
                        String  address,
                        String city,
                        String state,
-                       String zipCode, String url) {
+                       String zipCode, String url, String apiKey) {
         CloseableHttpClient client = HttpClients.createDefault();
         List<NameValuePair> obj= new ArrayList<>();
         String result="";
@@ -46,7 +46,7 @@ public class SynchHttpClient {
             builder.addParameters(obj);
             HttpGet request = new HttpGet(builder.build());
             // add request headers
-            request.addHeader("x-api-key","xAbaGhS2orRCICWSAYiKXfBUHBrY1S90");
+            request.addHeader("x-api-key",apiKey);
            // request.setP
 
            // HttpRequestBase request = new H

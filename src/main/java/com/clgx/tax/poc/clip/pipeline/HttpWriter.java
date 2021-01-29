@@ -25,6 +25,7 @@ public class HttpWriter<T> extends PTransform<PCollection<KV<String,PasPrcl>>,PC
 
     @Override
     public PCollection<KV<String, PasPrcl>> expand(PCollection<KV<String, PasPrcl>> input) {
+
         return input.apply(ParDo.of(new Fn<>()));
     }
 
@@ -118,7 +119,7 @@ public class HttpWriter<T> extends PTransform<PCollection<KV<String,PasPrcl>>,PC
                         prcl.getSTRT_NBR_TXT() + " " + prcl.getSTRT_NM() + " " + prcl.getSTRT_TYP(),
                         prcl.getCITY_NM(),
                         prcl.getSTATE_CD(),
-                        prcl.getPOSTAL_CD(),prcl.getUrl()
+                        prcl.getPOSTAL_CD(),prcl.getUrl(),prcl.getApiKey()
                 );
                 log.info("Iterating for parcel::" + prcl.getPRCL_KEY());
                 PasPrcl outputObj = new PasPrcl();
