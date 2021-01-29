@@ -1,6 +1,9 @@
-Set google credentials
+#### CLIP SERVICE
 
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/dtetl-dev.json"
+**Set google credentials**
+
+`export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/dtetl-dev.json"
+`
 
 Compile the file
 
