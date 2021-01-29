@@ -20,7 +20,7 @@ Future Scope::
 
 - [ ] Set the cloud app credentials variable
 ```bash      
- export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/dtetl-dev.json
+ export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/dtetl-dev.json"
  ```
 
 # Execution Steps
