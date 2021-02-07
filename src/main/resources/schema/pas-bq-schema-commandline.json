@@ -1,0 +1,122 @@
+ [
+  {
+    "mode": "NULLABLE",
+    "name": "HASHKEYVAL",
+    "type": "STRING"
+  },
+{
+"mode": "REQUIRED",
+"name": "PARCELKEY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "LIENKEY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "BILLKEY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "INSTALLMENTKEY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "AMOUNTKEY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "BILLYEAR",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "CLIPNUMBER",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "TAXID",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "STATECOUNTY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "APNNUMBER",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "ADD_UNITNUMBER",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "ADD_STREETDIRECTION",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "ADD_STREETADDRESS",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "ADD_CITY",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "ADD_POSTALCODE",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "ADD_COUNTYNAME",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "OWNER_PRIMARY_FIRSTNAME",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "OWNER_PRIMARY_LASTNAME",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "INSTALLMENTID",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "INSTALLMENTTYPE",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "AMOUNTTYPE",
+"type": "STRING"
+},
+{
+"mode": "NULLABLE",
+"name": "AMOUNT",
+"type": "FLOAT"
+},
+{
+"mode": "NULLABLE",
+"name": "GOOD_THRU_DT",
+"type": "DATETIME"
+}
+]

@@ -9,5 +9,8 @@
         <module name="POC-Pipelines" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="POC-Pipelines (1)" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
