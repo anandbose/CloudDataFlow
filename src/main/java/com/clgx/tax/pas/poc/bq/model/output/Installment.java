@@ -17,7 +17,7 @@ public class Installment implements Serializable {
   //  private Date installmentBeginDate;
  //   private Date installmentEndDate;
 
-    private List<com.clgx.tax.data.model.poc.output.Amount> amounts;
-    private List<com.clgx.tax.data.model.poc.output.bqSchema> bigQueryRecs;
+    private List<Amount> amounts;
+    private List<bqSchema> bigQueryRecs;
     private Double amountTotals;
 }

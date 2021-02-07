@@ -15,12 +15,12 @@ public class Parcel implements Serializable,Cloneable {
     private String prclKey;
     private String billYear;
     private String clipNumber;
-    private com.clgx.tax.data.model.poc.output.Address address;
+    private Address address;
     private String taxId;
     private String stateCounty;
     private String apnNumber;
-    private List<com.clgx.tax.data.model.poc.output.Owner> owners;
-    private List<com.clgx.tax.data.model.poc.output.Installment> installments;
+    private List<Owner> owners;
+    private List<Installment> installments;
     private List<String> taxIds;
 
     public Object clone() throws
