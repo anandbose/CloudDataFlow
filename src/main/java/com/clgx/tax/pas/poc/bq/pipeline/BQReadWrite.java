@@ -109,13 +109,17 @@ public class BQReadWrite implements Serializable {
                                     boolean match = false;
 
                                         for(bqSchema existingRec: BqPasRecs) {
-                                            if (bqRecord.getHashKey().equals(existingRec.getHashKey()))
+                                            log.info("Existing hashkey::"+existingRec.getHashKey()+"::");
+                                            log.info("New Hashkey::"+bqRecord.getHashKey()+"::");
+                                            if (bqRecord.getHashKey().equals(existingRec.getHashKey())) {
+                                                log.info("Matched key::"+bqRecord.getHashKey()+"::");
                                                 match = true;
+                                            }
                                         }
                                         if (!match) {
 
                                             /**Create Parcel Record and installment records**/
-                                            log.info("hash key didnot match so definitely a new bqRecord");
+                                            log.info("hash key::"+bqRecord.getHashKey()+":: didnot match so definitely a new bqRecord");
                                             newRecords.add(bqRecord);
 
                                         }

@@ -42,6 +42,7 @@ public class bqTestPasSchema implements Serializable {
         obj.setParcelKey((String)row.get("PARCELKEY"));
         obj.setHashKey((String)row.get("HASHKEYVAL"));
      //   obj.setAmountKey((String)row.get("AMOUNTKEY"));
+        log.info("The value from bigquery is ::"+obj.toString());
         return obj;
     }
     private static String setHashKey(String hashString)
