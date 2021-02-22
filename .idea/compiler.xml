@@ -3,11 +3,18 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="poc-clip-kafka" />
+        <module name="poc-clip-kafka (1)" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.6">
       <module name="bqpocpas" target="8" />
       <module name="poc-clip" target="8" />
-      <module name="poc-clip-kafka" target="8" />
+      <module name="poc-clip-kafka (2)" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
