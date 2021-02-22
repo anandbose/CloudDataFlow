@@ -1,0 +1,9 @@
+{
+  "namespace": "example.avro",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "county","type": ["int","null"]},
+    {"name": "state","type": ["int","null"]}
+  ]
+}

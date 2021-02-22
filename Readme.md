@@ -28,7 +28,7 @@ Future Scope::
 - [ ] Compile and run the code locally
 
 ```bash
-mvn compile exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
+mvn compile -Djava.security.krb5.conf=/tmp/krb5.conf exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
 -Dexec.args=" \
 --httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn \
 --apiKey=xAbaGhS2orRCICWSAYiKXfBUHBrY1S90"
