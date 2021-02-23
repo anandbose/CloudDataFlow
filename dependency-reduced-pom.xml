@@ -88,7 +88,21 @@
       <url>https://repository.apache.org/content/repositories/snapshots/</url>
     </repository>
   </repositories>
-  <properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.beam</groupId>
+            <artifactId>beam-sdks-java-core</artifactId>
+            <version>2.22.0</version>
+            <scope>compile</scope>
+        </dependency>
+      <dependency>
+        <groupId>org.apache.beam</groupId>
+        <artifactId>beam-sdks-java-io-kafka</artifactId>
+        <version>2.22.0</version>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
+    <properties>
     <project.basedir>/Users/anbose/Documents/GitHub/CloudDataFlow</project.basedir>
     <slf4j.version>1.7.30</slf4j.version>
     <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
