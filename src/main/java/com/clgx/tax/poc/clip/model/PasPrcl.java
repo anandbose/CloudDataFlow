@@ -91,7 +91,7 @@ public class PasPrcl implements Serializable,Cloneable {
     private String  apiKey;
 
     public Object clone()throws CloneNotSupportedException{
-        return (PasPrcl)super.clone();
+        return super.clone();
     }
 
     public String createOutput()

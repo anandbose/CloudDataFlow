@@ -1,9 +1,10 @@
 {
-  "namespace": "example.avro",
+  "namespace": "com.clgx.tax.poc.clip.model.avro",
   "type": "record",
   "name": "User",
   "fields": [
-    {"name": "county","type": ["int","null"]},
-    {"name": "state","type": ["int","null"]}
+    {"name": "county","type": ["string","null"]},
+    {"name": "state","type": ["string","null"]},
+    {"name": "date","type": ["string","null"]}
   ]
 }

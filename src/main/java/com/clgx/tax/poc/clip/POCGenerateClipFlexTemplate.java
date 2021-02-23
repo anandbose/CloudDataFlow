@@ -84,9 +84,10 @@ public class POCGenerateClipFlexTemplate {
             String saslJaasConfig = "com.sun.security.auth.module.Krb5LoginModule required " +
                     "useKeyTab=true " +
                     "storeKey=true " +
+                    "debug=true "+
                     "keyTab=\"/tmp/client-svc.keytab\" " +
                     "principal=\"dev-tax-dpl-svc@IDAP.CORELOGIC.COM\";";
-            //commonKafkaConfig.put("security.protocol", "SASL_SSL");
+            commonKafkaConfig.put("security.protocol", "SASL_SSL");
             commonKafkaConfig.put("sasl.mechanism","GSSAPI");
             commonKafkaConfig.put("ssl.truststore.location", "/tmp/client.truststore.jks");
             commonKafkaConfig.put("sasl.jaas.config", saslJaasConfig);
@@ -96,6 +97,9 @@ public class POCGenerateClipFlexTemplate {
             commonKafkaConfig.put("schema.registry.url", options.getKfkSchemRegistry());
             commonKafkaConfig.put("specific.avro.reader", true);
             commonKafkaConfig.put("group.id", "test-avro");
+            commonKafkaConfig.put("client.id","dataflow-client-poc");
+            commonKafkaConfig.put("enable.auto.commit","true");
+
             //set consumer congig
            // consumerConfig.put("")
 
@@ -166,10 +170,7 @@ public class POCGenerateClipFlexTemplate {
         )).apply("Filter only TXA records",Filter.by((SerializableFunction<KV<String, PasPrcl>, Boolean>) input -> {
             PasPrcl prcl = input.getValue();
 
-            if (prcl.getSOR_CD().equals("TXA"))
-                return true;
-            else
-                return false;
+            return prcl.getSOR_CD().equals("TXA");
         }));
 
 

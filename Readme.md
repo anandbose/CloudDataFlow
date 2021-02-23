@@ -28,10 +28,16 @@ Future Scope::
 - [ ] Compile and run the code locally
 
 ```bash
-mvn compile -Djava.security.krb5.conf=/tmp/krb5.conf exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
+sudo mvn compile -Djava.security.krb5.conf=/Users/anbose/Documents/A2020/kafka/dev-krb5.conf exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
 -Dexec.args=" \
 --httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn \
 --apiKey=xAbaGhS2orRCICWSAYiKXfBUHBrY1S90"
+```
+
+-[ ] Run producer to trigger message
+```bash
+sudo mvn compile -Djava.security.krb5.conf=/Users/anbose/Documents/A2020/kafka/dev-krb5.conf exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.services.ProducerAvroConfig
+
 ```
 - [ ] Compile the code and export the dataflow template to cloud
 ```bash

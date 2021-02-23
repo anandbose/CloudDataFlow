@@ -5,15 +5,17 @@
  */
 package com.clgx.tax.poc.clip.model.avro;
 
-import org.apache.avro.message.BinaryMessageDecoder;
-import org.apache.avro.message.BinaryMessageEncoder;
-import org.apache.avro.message.SchemaStore;
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
+import org.apache.avro.message.BinaryMessageEncoder;
+import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class User extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -7028712919007875968L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"example.avro\",\"fields\":[{\"name\":\"county\",\"type\":[\"int\",\"null\"]},{\"name\":\"state\",\"type\":[\"int\",\"null\"]}]}");
+  private static final long serialVersionUID = 7664056212672525691L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"com.clgx.tax.poc.clip.model.avro\",\"fields\":[{\"name\":\"county\",\"type\":[\"string\",\"null\"]},{\"name\":\"state\",\"type\":[\"string\",\"null\"]},{\"name\":\"date\",\"type\":[\"string\",\"null\"]}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -69,8 +71,9 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     return DECODER.decode(b);
   }
 
-   private Integer county;
-   private Integer state;
+   private java.lang.CharSequence county;
+   private java.lang.CharSequence state;
+   private java.lang.CharSequence date;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -83,29 +86,33 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * All-args constructor.
    * @param county The new value for county
    * @param state The new value for state
+   * @param date The new value for date
    */
-  public User(Integer county, Integer state) {
+  public User(java.lang.CharSequence county, java.lang.CharSequence state, java.lang.CharSequence date) {
     this.county = county;
     this.state = state;
+    this.date = date;
   }
 
-  public SpecificData getSpecificData() { return MODEL$; }
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
-  public Object get(int field$) {
+  public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return county;
     case 1: return state;
+    case 2: return date;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   // Used by DatumReader.  Applications should not call.
   @SuppressWarnings(value="unchecked")
-  public void put(int field$, Object value$) {
+  public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: county = (Integer)value$; break;
-    case 1: state = (Integer)value$; break;
+    case 0: county = (java.lang.CharSequence)value$; break;
+    case 1: state = (java.lang.CharSequence)value$; break;
+    case 2: date = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -114,7 +121,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Gets the value of the 'county' field.
    * @return The value of the 'county' field.
    */
-  public Integer getCounty() {
+  public java.lang.CharSequence getCounty() {
     return county;
   }
 
@@ -123,7 +130,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'county' field.
    * @param value the value to set.
    */
-  public void setCounty(Integer value) {
+  public void setCounty(java.lang.CharSequence value) {
     this.county = value;
   }
 
@@ -131,7 +138,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Gets the value of the 'state' field.
    * @return The value of the 'state' field.
    */
-  public Integer getState() {
+  public java.lang.CharSequence getState() {
     return state;
   }
 
@@ -140,16 +147,33 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'state' field.
    * @param value the value to set.
    */
-  public void setState(Integer value) {
+  public void setState(java.lang.CharSequence value) {
     this.state = value;
+  }
+
+  /**
+   * Gets the value of the 'date' field.
+   * @return The value of the 'date' field.
+   */
+  public java.lang.CharSequence getDate() {
+    return date;
+  }
+
+
+  /**
+   * Sets the value of the 'date' field.
+   * @param value the value to set.
+   */
+  public void setDate(java.lang.CharSequence value) {
+    this.date = value;
   }
 
   /**
    * Creates a new User RecordBuilder.
    * @return A new User RecordBuilder
    */
-  public static Builder newBuilder() {
-    return new Builder();
+  public static com.clgx.tax.poc.clip.model.avro.User.Builder newBuilder() {
+    return new com.clgx.tax.poc.clip.model.avro.User.Builder();
   }
 
   /**
@@ -157,11 +181,11 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing builder to copy.
    * @return A new User RecordBuilder
    */
-  public static Builder newBuilder(Builder other) {
+  public static com.clgx.tax.poc.clip.model.avro.User.Builder newBuilder(com.clgx.tax.poc.clip.model.avro.User.Builder other) {
     if (other == null) {
-      return new Builder();
+      return new com.clgx.tax.poc.clip.model.avro.User.Builder();
     } else {
-      return new Builder(other);
+      return new com.clgx.tax.poc.clip.model.avro.User.Builder(other);
     }
   }
 
@@ -170,11 +194,11 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing instance to copy.
    * @return A new User RecordBuilder
    */
-  public static Builder newBuilder(User other) {
+  public static com.clgx.tax.poc.clip.model.avro.User.Builder newBuilder(com.clgx.tax.poc.clip.model.avro.User other) {
     if (other == null) {
-      return new Builder();
+      return new com.clgx.tax.poc.clip.model.avro.User.Builder();
     } else {
-      return new Builder(other);
+      return new com.clgx.tax.poc.clip.model.avro.User.Builder(other);
     }
   }
 
@@ -185,8 +209,9 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<User>
     implements org.apache.avro.data.RecordBuilder<User> {
 
-    private Integer county;
-    private Integer state;
+    private java.lang.CharSequence county;
+    private java.lang.CharSequence state;
+    private java.lang.CharSequence date;
 
     /** Creates a new Builder */
     private Builder() {
@@ -197,7 +222,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(Builder other) {
+    private Builder(com.clgx.tax.poc.clip.model.avro.User.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.county)) {
         this.county = data().deepCopy(fields()[0].schema(), other.county);
@@ -207,13 +232,17 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
         this.state = data().deepCopy(fields()[1].schema(), other.state);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
+      if (isValidValue(fields()[2], other.date)) {
+        this.date = data().deepCopy(fields()[2].schema(), other.date);
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
+      }
     }
 
     /**
      * Creates a Builder by copying an existing User instance
      * @param other The existing instance to copy.
      */
-    private Builder(User other) {
+    private Builder(com.clgx.tax.poc.clip.model.avro.User other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.county)) {
         this.county = data().deepCopy(fields()[0].schema(), other.county);
@@ -223,13 +252,17 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
         this.state = data().deepCopy(fields()[1].schema(), other.state);
         fieldSetFlags()[1] = true;
       }
+      if (isValidValue(fields()[2], other.date)) {
+        this.date = data().deepCopy(fields()[2].schema(), other.date);
+        fieldSetFlags()[2] = true;
+      }
     }
 
     /**
       * Gets the value of the 'county' field.
       * @return The value.
       */
-    public Integer getCounty() {
+    public java.lang.CharSequence getCounty() {
       return county;
     }
 
@@ -239,7 +272,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'county'.
       * @return This builder.
       */
-    public Builder setCounty(Integer value) {
+    public com.clgx.tax.poc.clip.model.avro.User.Builder setCounty(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.county = value;
       fieldSetFlags()[0] = true;
@@ -259,7 +292,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'county' field.
       * @return This builder.
       */
-    public Builder clearCounty() {
+    public com.clgx.tax.poc.clip.model.avro.User.Builder clearCounty() {
       county = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -269,7 +302,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Gets the value of the 'state' field.
       * @return The value.
       */
-    public Integer getState() {
+    public java.lang.CharSequence getState() {
       return state;
     }
 
@@ -279,7 +312,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'state'.
       * @return This builder.
       */
-    public Builder setState(Integer value) {
+    public com.clgx.tax.poc.clip.model.avro.User.Builder setState(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.state = value;
       fieldSetFlags()[1] = true;
@@ -299,9 +332,49 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'state' field.
       * @return This builder.
       */
-    public Builder clearState() {
+    public com.clgx.tax.poc.clip.model.avro.User.Builder clearState() {
       state = null;
       fieldSetFlags()[1] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'date' field.
+      * @return The value.
+      */
+    public java.lang.CharSequence getDate() {
+      return date;
+    }
+
+
+    /**
+      * Sets the value of the 'date' field.
+      * @param value The value of 'date'.
+      * @return This builder.
+      */
+    public com.clgx.tax.poc.clip.model.avro.User.Builder setDate(java.lang.CharSequence value) {
+      validate(fields()[2], value);
+      this.date = value;
+      fieldSetFlags()[2] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'date' field has been set.
+      * @return True if the 'date' field has been set, false otherwise.
+      */
+    public boolean hasDate() {
+      return fieldSetFlags()[2];
+    }
+
+
+    /**
+      * Clears the value of the 'date' field.
+      * @return This builder.
+      */
+    public com.clgx.tax.poc.clip.model.avro.User.Builder clearDate() {
+      date = null;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -310,11 +383,13 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     public User build() {
       try {
         User record = new User();
-        record.county = fieldSetFlags()[0] ? this.county : (Integer) defaultValue(fields()[0]);
-        record.state = fieldSetFlags()[1] ? this.state : (Integer) defaultValue(fields()[1]);
+        record.county = fieldSetFlags()[0] ? this.county : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.state = fieldSetFlags()[1] ? this.state : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.date = fieldSetFlags()[2] ? this.date : (java.lang.CharSequence) defaultValue(fields()[2]);
         return record;
-
-      } catch (Exception e) {
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
+      } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
     }
@@ -338,10 +413,9 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
-  @Override
-   protected boolean hasCustomCoders() { return true; }
-   @Override
-   public void customEncode(org.apache.avro.io.Encoder out)
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
     throws java.io.IOException
   {
     if (this.county == null) {
@@ -349,7 +423,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       out.writeNull();
     } else {
       out.writeIndex(0);
-      out.writeInt(this.county);
+      out.writeString(this.county);
     }
 
     if (this.state == null) {
@@ -357,40 +431,54 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       out.writeNull();
     } else {
       out.writeIndex(0);
-      out.writeInt(this.state);
+      out.writeString(this.state);
+    }
+
+    if (this.date == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.date);
     }
 
   }
-   @Override
-   public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
     throws java.io.IOException
   {
-
-    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrder();
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
     if (fieldOrder == null) {
       if (in.readIndex() != 0) {
         in.readNull();
         this.county = null;
       } else {
-        this.county = in.readInt();
+        this.county = in.readString(this.county instanceof Utf8 ? (Utf8)this.county : null);
       }
 
       if (in.readIndex() != 0) {
         in.readNull();
         this.state = null;
       } else {
-        this.state = in.readInt();
+        this.state = in.readString(this.state instanceof Utf8 ? (Utf8)this.state : null);
+      }
+
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.date = null;
+      } else {
+        this.date = in.readString(this.date instanceof Utf8 ? (Utf8)this.date : null);
       }
 
     } else {
-      for (int i = 0; i < 2; i++) {
+      for (int i = 0; i < 3; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           if (in.readIndex() != 0) {
             in.readNull();
             this.county = null;
           } else {
-            this.county = in.readInt();
+            this.county = in.readString(this.county instanceof Utf8 ? (Utf8)this.county : null);
           }
           break;
 
@@ -399,7 +487,16 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
             in.readNull();
             this.state = null;
           } else {
-            this.state = in.readInt();
+            this.state = in.readString(this.state instanceof Utf8 ? (Utf8)this.state : null);
+          }
+          break;
+
+        case 2:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.date = null;
+          } else {
+            this.date = in.readString(this.date instanceof Utf8 ? (Utf8)this.date : null);
           }
           break;
 

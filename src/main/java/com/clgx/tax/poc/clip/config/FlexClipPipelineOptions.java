@@ -15,7 +15,7 @@ public interface FlexClipPipelineOptions extends PipelineOptions {
     void setFileName(String fileName);
 
     //  @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/out-02003-20201207")
-    @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/output-0409-20201216")
+    @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/output-04019-20201216")
     String getOutputFileName();
     void setOutputFileName(String fileName);
 
