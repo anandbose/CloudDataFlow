@@ -10,6 +10,7 @@ import io.confluent.kafka.serializers.AbstractKafkaAvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.io.FileIO;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.io.kafka.KafkaIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
@@ -79,7 +80,7 @@ public class POCGenerateClipFlexTemplate {
  */
         Map<String, Object> commonKafkaConfig = new HashMap<>();
        // Map<String,Object> consumerConfig = new HashMap<>();
-
+        String   fileNameprefix = options.getFilePrefix();
         if(true) {
             String saslJaasConfig = "com.sun.security.auth.module.Krb5LoginModule required " +
                     "useKeyTab=true " +
@@ -114,13 +115,16 @@ public class POCGenerateClipFlexTemplate {
        .withBootstrapServers(options.getKfkBrokerServer())
                .withTopic(options.getKfkTriggerTopic())
                .withConsumerConfigUpdates(commonKafkaConfig)
+
                .withKeyDeserializer(StringDeserializer.class)
                .withValueDeserializer(MyClassKafkaAvroDeserializer.class)
                .withReadCommitted()
                        .commitOffsetsInFinalize()
                        .withoutMetadata()
 
+
        ).apply ("Process the message",ParDo.of(new DoFn<KV<String, User>, User>() {
+
            @ProcessElement
            public void processData(@Element KV<String,User> input,OutputReceiver<User> Out)
            {
@@ -143,6 +147,46 @@ public class POCGenerateClipFlexTemplate {
         String HttpUrl = options.getHttpUrl();
         String apiKey = options.getApiKey();
 
+     //   userObj.ma
+      //  PCollection<KV<String, String>> parcels =
+        PCollection<KV<String, PasPrcl>> parcels =
+                userObj.apply("get file Namee for pas parcel",ParDo.of(new DoFn<User,String>()
+                                                                       {
+                                                                           //String fileNameprefix="";
+
+                                                                           @ProcessElement
+                                                                           public void  apply(@Element User obj ,OutputReceiver<String> out)
+                                                                           {
+
+                                                                               out.output( fileNameprefix+pasPrclPrefix+obj.getCounty()+obj.getState()+"_"+obj.getDate());
+
+                                                                           }
+
+            }
+    )
+        )
+                .apply(FileIO.matchAll())
+                .apply("Read PAS Parcels",FileIO.readMatches())
+                .apply("Read the TextFiles",TextIO.readFiles())
+        .apply("convert to parcel object", ParDo.of(
+                new DoFn<String, KV<String, PasPrcl>>() {
+                    @ProcessElement
+                    public void processElement(@Element String Input, OutputReceiver<KV<String, PasPrcl>> out) {
+                        String[] fields = Input.split(delimiter);
+
+                        PasPrcl obj = new MaptoPasPrcl().maptoprcl(fields,HttpUrl,apiKey);
+                        KV<String,PasPrcl> kvObj = KV.of(obj.getPRCL_KEY(),obj);
+                        log.info("Current time is::"+Instant.now());
+                        out.outputWithTimestamp(kvObj, Instant.now());
+                    }
+                }
+        )).apply("Filter only TXA records", Filter.by((SerializableFunction<KV<String, PasPrcl>, Boolean>) input -> {
+            PasPrcl prcl = input.getValue();
+
+            return prcl.getSOR_CD().equals("TXA");
+        }));;
+
+/*
         PCollection<KV<String, PasPrcl>> parcels = p1.apply("Read PAS Parcels", TextIO.read().from(
                 ValueProvider.NestedValueProvider.of(ValueProvider.StaticValueProvider.of(options.getFilePrefix()),  new SerializableFunction<String, String>()
                 {
@@ -173,7 +217,7 @@ public class POCGenerateClipFlexTemplate {
             return prcl.getSOR_CD().equals("TXA");
         }));
 
-
+*/
         /**
          * Clip the parcel data
          * Creat window as well
@@ -204,7 +248,7 @@ public class POCGenerateClipFlexTemplate {
 
         )
               //  .apply("writeTofile",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/Clipinfo.txt")));
-                .apply("writeTofile",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of(options.getOutputFileName()+"-"+"PAS_PARCEL_CLIPPED")));
+                .apply("writeTofile",TextIO.write().withWindowedWrites().withoutSharding().to(ValueProvider.StaticValueProvider.of(options.getOutputFileName()+"-"+"PAS_PARCEL_CLIPPED")));
 
         /**
          * Read the PAS Parcel owner and store data in pcollection

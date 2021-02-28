@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <project.basedir>/Users/anbose/Documents/GitHub/CloudDataFlow</project.basedir>
+        <project.basedir>.</project.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <beam.version>2.22.0</beam.version>

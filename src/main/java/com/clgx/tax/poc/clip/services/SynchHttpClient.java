@@ -19,10 +19,10 @@ import java.util.List;
 public class SynchHttpClient {
     Logger log = LoggerFactory.getLogger(SynchHttpClient.class);
     public String send(String apn,
-                       String  address,
+                       String address,
                        String city,
                        String state,
-                       String zipCode, String url, String apiKey) {
+                       String zipCode, String url) {
         CloseableHttpClient client = HttpClients.createDefault();
         List<NameValuePair> obj= new ArrayList<>();
         String result="";
@@ -46,7 +46,7 @@ public class SynchHttpClient {
             builder.addParameters(obj);
             HttpGet request = new HttpGet(builder.build());
             // add request headers
-            request.addHeader("x-api-key",apiKey);
+            request.addHeader("x-api-key","xAbaGhS2orRCICWSAYiKXfBUHBrY1S90");
            // request.setP
 
            // HttpRequestBase request = new H

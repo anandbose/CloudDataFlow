@@ -6,7 +6,7 @@ import org.apache.beam.sdk.options.Validation;
 
 public interface FlexClipPipelineOptions extends PipelineOptions {
     //  @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/-02003-20201207")
-    @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/-04019-20201216")
+    @Default.String("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/")
     @Validation.Required
     String getFilePrefix();
     void setFilePrefix(String fileName);

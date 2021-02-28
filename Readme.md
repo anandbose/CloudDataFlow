@@ -24,6 +24,28 @@ Future Scope::
  ```
 
 # Execution Steps
+- [ ] Set up the schema in the registry
+   - Check if schema exists
+    - by topic name
+    ```bash
+     curl --silent -X GET https://dev-kafka-blue-registry-1.kafka.dev.cloud.clgxdata.com:8081/subjects/dtp.poc.pasdata.trigger-value/versions/latest | jq
+    ```
+    - by id
+    ```bash
+     curl --silent -X GET https://dev-kafka-blue-registry-1.kafka.dev.cloud.clgxdata.com:8081/schemas/ids/513 | jq .
+    ```
+    - change shema compatibility
+    ```bash
+     curl -X PUT -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+     --data '{"compatibility": "BACKWARD"}' \
+     https://dev-kafka-blue-registry-1.kafka.dev.cloud.clgxdata.com:8081/config/dtp.poc.pasdata.trigger-value
+    ```
+    - Create the schema
+    ```bash
+        curl -X POST -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+        --data '{"schema": "{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"com.clgx.tax.poc.clip.model.avro\",\"fields\":[{\"name\":\"county\",\"type\":[\"string\",\"null\"]},{\"name\":\"state\",\"type\":[\"string\",\"null\"]},{\"name\": \"date\",\"type\": [\"string\",\"null\"]}]}"}' \
+        https://dev-kafka-blue-registry-1.kafka.dev.cloud.clgxdata.com:8081/subjects/dtp.poc.pasdata.trigger-value/versions
+    ```
 
 - [ ] Compile and run the code locally
 
