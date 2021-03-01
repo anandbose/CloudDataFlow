@@ -14,8 +14,8 @@
         <project.basedir>.</project.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <beam.version>2.22.0</beam.version>
-        <kafka.version>2.6.0</kafka.version>
+        <beam.version>2.24.0</beam.version>
+        <kafka.version>2.7.0</kafka.version>
 
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -207,11 +207,7 @@
             <artifactId>async-http-client</artifactId>
             <version>2.12.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.2.9.RELEASE</version>
-        </dependency>
+
         <!--Avro dependency-->
         <dependency>
             <groupId>org.apache.avro</groupId>
@@ -237,5 +233,12 @@
             <version>20201115</version>
 
         </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service-annotations</artifactId>
+            <version>1.0-rc5</version>
+        </dependency>
+
+
     </dependencies>
 </project>

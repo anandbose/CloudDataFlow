@@ -1,13 +1,12 @@
 package com.clgx.tax.poc.clip.config;
-import com.google.auto.service.AutoService;
 
+import com.google.auto.service.AutoService;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import org.apache.beam.sdk.harness.JvmInitializer;
 import org.apache.beam.sdk.options.PipelineOptions;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -7,7 +7,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class SynchHttpClient {
                        String city,
                        String state,
                        String zipCode, String url) {
-        CloseableHttpClient client = HttpClients.createDefault();
+        CloseableHttpClient client = HttpClientBuilder.create().build();
         List<NameValuePair> obj= new ArrayList<>();
         String result="";
         try

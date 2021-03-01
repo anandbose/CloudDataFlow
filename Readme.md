@@ -20,7 +20,9 @@ Future Scope::
 
 - [ ] Set the cloud app credentials variable
 ```bash      
- export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/dtetl-dev.json"
+ export GOOGLE_APPLICATION_CREDENTIALS="/Users/anbose/Downloads/dtetl-dev.json"  
+ gcloud auth activate-service-account tf-clgx-dtetl-spark-dev@clgx-dtetl-spark-dev-fc0e.iam.gserviceaccount.com \
+  --key-file=/Users/anbose/Downloads/dtetl-dev.json
  ```
 
 # Execution Steps
@@ -58,12 +60,12 @@ sudo mvn compile -Djava.security.krb5.conf=/Users/anbose/Documents/A2020/kafka/d
 
 -[ ] Run producer to trigger message
 ```bash
-sudo mvn compile -Djava.security.krb5.conf=/Users/anbose/Documents/A2020/kafka/dev-krb5.conf exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.services.ProducerAvroConfig
+sudo sudo mvn compile -Djava.security.krb5.conf=/Users/anbose/Documents/A2020/kafka/dev-krb5.conf exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.services.ProducerAvroConfig
 
 ```
 - [ ] Compile the code and export the dataflow template to cloud
 ```bash
-mvn compile exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
+ sudo mvn compile  exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFlexTemplate \
 -Dexec.args=" \
 --project=clgx-dtetl-spark-dev-fc0e \
 --runner=DataflowRunner \
@@ -74,9 +76,10 @@ mvn compile exec:java  -Dexec.mainClass=com.clgx.tax.poc.clip.POCGenerateClipFle
 --network=projects/clgx-network-nonprd-4dd3/global/networks/clgx-vpc-nonprd     \
 --numWorkers=1 \
 --maxNumWorkers=10 \
---filePrefix=gs://gcdf_dev_test/input/-04019-20201218 \
+--filePrefix=gs://gcdf_dev_test/input/ \
 --outputFileName=gs://gcdf_dev_test/output/out-20210121-04019  \
 --httpUrl=https://uat-west-clp-coreapi-clip-lookup.apps.uat.pcfusw1stg.solutions.corelogic.com/search/apn \
+--usePublicIps=false \
 --apiKey=xAbaGhS2orRCICWSAYiKXfBUHBrY1S90"
 ```
 

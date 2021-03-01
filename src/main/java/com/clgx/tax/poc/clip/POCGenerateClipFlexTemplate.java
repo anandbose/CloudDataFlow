@@ -65,6 +65,8 @@ public class POCGenerateClipFlexTemplate {
     public static void main(String[] args) {
         FlexClipPipelineOptions options =
                 PipelineOptionsFactory.fromArgs(args).withValidation().as(FlexClipPipelineOptions.class);
+
+
         runPasPipeline(options);
 
     }
@@ -97,8 +99,8 @@ public class POCGenerateClipFlexTemplate {
             commonKafkaConfig.put("auto.offset.reset", "latest");
             commonKafkaConfig.put("schema.registry.url", options.getKfkSchemRegistry());
             commonKafkaConfig.put("specific.avro.reader", true);
-            commonKafkaConfig.put("group.id", "test-avro");
-            commonKafkaConfig.put("client.id","dataflow-client-poc");
+            commonKafkaConfig.put("group.id", "cloudflow-1");
+            commonKafkaConfig.put("client.id","dataflow-client-poc-2");
             commonKafkaConfig.put("enable.auto.commit","true");
 
             //set consumer congig
@@ -186,38 +188,9 @@ public class POCGenerateClipFlexTemplate {
             return prcl.getSOR_CD().equals("TXA");
         }));;
 
-/*
-        PCollection<KV<String, PasPrcl>> parcels = p1.apply("Read PAS Parcels", TextIO.read().from(
-                ValueProvider.NestedValueProvider.of(ValueProvider.StaticValueProvider.of(options.getFilePrefix()),  new SerializableFunction<String, String>()
-                {
-                    @Override
-                    public String apply(String input) {
-                        String[] fields = input.split("-");
-                        String dt = fields[2];
 
-                        return fields[0]+pasPrclPrefix+fields[1]+"_"+fields[2];
-                    }
-                })
-                )
-         ).apply("convert to parcel object", ParDo.of(
-                new DoFn<String, KV<String, PasPrcl>>() {
-                    @ProcessElement
-                    public void processElement(@Element String Input, OutputReceiver<KV<String, PasPrcl>> out) {
-                        String[] fields = Input.split(delimiter);
 
-                        PasPrcl obj = new MaptoPasPrcl().maptoprcl(fields,HttpUrl,apiKey);
-                        KV<String,PasPrcl> kvObj = KV.of(obj.getPRCL_KEY(),obj);
-                        log.info("Current time is::"+Instant.now());
-                        out.outputWithTimestamp(kvObj,Instant.now());
-                    }
-                }
-        )).apply("Filter only TXA records",Filter.by((SerializableFunction<KV<String, PasPrcl>, Boolean>) input -> {
-            PasPrcl prcl = input.getValue();
 
-            return prcl.getSOR_CD().equals("TXA");
-        }));
-
-*/
         /**
          * Clip the parcel data
          * Creat window as well
