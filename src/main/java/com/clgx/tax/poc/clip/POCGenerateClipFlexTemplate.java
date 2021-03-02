@@ -14,17 +14,12 @@ import org.apache.beam.sdk.io.FileIO;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.io.kafka.KafkaIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.beam.sdk.options.ValueProvider;
 import org.apache.beam.sdk.transforms.*;
-import org.apache.beam.sdk.transforms.windowing.FixedWindows;
-import org.apache.beam.sdk.transforms.windowing.Never;
-import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,6 +115,7 @@ public class POCGenerateClipFlexTemplate {
 
                .withKeyDeserializer(StringDeserializer.class)
                .withValueDeserializer(MyClassKafkaAvroDeserializer.class)
+           //    .withMaxNumRecords(1)
                .withReadCommitted()
                        .commitOffsetsInFinalize()
                        .withoutMetadata()
@@ -179,7 +175,7 @@ public class POCGenerateClipFlexTemplate {
                         PasPrcl obj = new MaptoPasPrcl().maptoprcl(fields,HttpUrl,apiKey);
                         KV<String,PasPrcl> kvObj = KV.of(obj.getPRCL_KEY(),obj);
                         log.info("Current time is::"+Instant.now());
-                        out.outputWithTimestamp(kvObj, Instant.now());
+                        out.output(kvObj);
                     }
                 }
         )).apply("Filter only TXA records", Filter.by((SerializableFunction<KV<String, PasPrcl>, Boolean>) input -> {
@@ -193,17 +189,9 @@ public class POCGenerateClipFlexTemplate {
 
         /**
          * Clip the parcel data
-         * Creat window as well
-         */
+         * */
 
-        Duration windowDuration = Duration.standardMinutes(1);
-        Window<KV<String, PasPrcl>> window =
-                Window.<KV<String, PasPrcl>>into(FixedWindows.of(windowDuration))
-                        //Window.<KV<String, PasPrcl>>into(new GlobalWindows())
-                                                   .triggering(Never.ever())
-                                                    .accumulatingFiredPanes()
-                                                    .withAllowedLateness(Duration.standardSeconds(10));
-        PCollection<KV<String, PasPrcl>> clippedParcels = parcels.apply(window).apply("Clip the parcels",new HttpWriter<>());
+        PCollection<KV<String, PasPrcl>> clippedParcels = parcels.apply("Clip the parcels",new HttpWriter<>());
 
 
         //Convert clipped to a parcel collection
@@ -219,9 +207,9 @@ public class POCGenerateClipFlexTemplate {
                     }
                 })
 
-        )
+        );
               //  .apply("writeTofile",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of("/Users/anbose/MyApplications/SparkPOCFiles/PAS/lacounty/input/inputs/small/Clipinfo.txt")));
-                .apply("writeTofile",TextIO.write().withWindowedWrites().withoutSharding().to(ValueProvider.StaticValueProvider.of(options.getOutputFileName()+"-"+"PAS_PARCEL_CLIPPED")));
+          //      .apply("writeTofile",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of(options.getOutputFileName()+"-"+"PAS_PARCEL_CLIPPED")));
 
         /**
          * Read the PAS Parcel owner and store data in pcollection
