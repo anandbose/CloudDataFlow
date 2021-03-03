@@ -11,6 +11,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BQPASPOC" target="8" />
+      <module name="poc-clip-kafka" target="8" />
+      <module name="poc-clip-kafka (1)" target="8" />
       <module name="POC-Pipelines (1)" target="8" />
     </bytecodeTargetLevel>
   </component>

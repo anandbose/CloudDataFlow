@@ -1,0 +1,689 @@
+{
+  "fields": [
+    {
+      "mode": "NULLABLE",
+      "name": "HASHKEYVAL",
+      "type": "STRING"
+    },
+    {
+      "mode": "REQUIRED",
+      "name": "PARCELKEY",
+      "type": "STRING"
+    },
+
+
+    {
+      "mode": "NULLABLE",
+      "name": "CLIPNUMBER",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "GEO_SRC_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "FIPS_STATE_ID",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "FIPS_CNTY_ID",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "SRVY_ID",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PRCL_SCND_USE_NM",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "BLDG_CLS_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "LAND_TYP_CD",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "LAND_USE_NM",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "PRPTY_SOLD_DT",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "LAST_IMPRV_YR",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "OWN_ACQ_DT",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PRPTY_ZONE_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "CENSUS_TRACT_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "FLOOD_ZONE_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "NO_TXAUTH_FLG",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ORIG_SRC_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "MOBL_HOME_VIN_ID",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ASSESS_PRCL_ID",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "ASSESS_YR",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "FILE_CRTE_DT",
+      "type": "DATETIME"
+    },    {
+      "mode": "NULLABLE",
+      "name": "NON_ADV_PRPTY_DESC",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "NON_ADV_PRPTY_VALUE_AMT",
+      "type": "FLOAT64"
+    },    {
+      "mode": "NULLABLE",
+      "name": "MAN_RSRCH_CD",
+      "type": "STRING"
+    },    {
+      "mode": "NULLABLE",
+      "name": "UAT_ADDR_TAG_ID",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PRCL_USE_NM",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PRCL_SCND_USE_CD",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "FULL_EXMPT_FLG",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "TAX_AREA",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "LAND_TYP_NM",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "BLDG_CLS_NM",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "NGHBRHD_CD",
+      "type": "STRING"
+    },
+
+    {
+      "mode": "NULLABLE",
+      "name": "GEO_CD_LATTD",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "GEO_CD_LONGTD",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "MAP_GRID_LOC_TXT",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "UNSCRB_SITUS_ADDR_TXT",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "UNSCRB_SITUS_ADDR_LN2_TXT",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "CNTY_ID",
+      "type": "STRING"
+    }, {
+      "mode": "NULLABLE",
+      "name": "STATE_ID",
+      "type": "STRING"
+    },
+
+
+    {
+      "name": "ADDRESS",
+      "type" : "RECORD",
+      "mode" : "REPEATED",
+      "fields" : [
+
+
+
+
+        {
+          "mode": "NULLABLE",
+          "name": "STRT_PRE_DIR_CD",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "STRT_NBR_TXT",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "STRT_NBR_END_TXT",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "STRT_NBR_FRCTN_TXT",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "STRT_NM",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "UNIT_TYP",
+          "type": "STRING"
+        },
+
+        {
+          "mode": "NULLABLE",
+          "name": "UNIT_NBR_TXT",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "UNIT_NBR_END_TXT",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "PO_BOX_NBR_TXT",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "BOX_LOC_TXT",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "RR_CD",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "RR_NBR",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "NGHBRHD_NM",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "CITY_NM",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "CNTY_NM",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "POSTAL_CD",
+          "type": "STRING"
+        },        {
+          "mode": "NULLABLE",
+          "name": "CNTRY_CD",
+          "type": "STRING"
+        },
+
+
+        {
+          "mode": "NULLABLE",
+          "name": "STATE_CD",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "STATE_SUB_CD",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "mode": "REPEATED",
+      "name": "OWNERS",
+      "type": "RECORD",
+      "fields": [
+        {
+          "name": "OWN_TYP",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+
+        {
+          "name": "CMPNY_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+        {
+          "name": "LAST_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+        {
+          "name": "MTRNL_LAST_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+        {
+          "name": "FRST_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+        {
+          "name": "MID_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+        {
+          "name": "OWN_PFX_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+        {
+          "name": "OWN_SFX_NM",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        }
+
+      ]
+    },
+    {
+      "name": "LIENS",
+      "type": "RECORD",
+      "mode": "REPEATED",
+      "fields": [
+
+        {
+          "mode": "NULLABLE",
+          "name": "LIEN_KEY",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "TAX_ID",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "TXAUTH_ID",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "TXAUTH_FILE_TYP",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "LIEN_TYP",
+          "type": "STRING"
+        },
+
+
+
+
+        {
+          "mode": "NULLABLE",
+          "name": "DSPLY_TAX_ID_FLG",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "MUNI_CD",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "SCHL_DSTRC_CD",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "PEND_APRTN_FLG",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "PEND_APRTN_DT",
+          "type": "DATETIME"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "ORIG_SRC_CD",
+          "type": "STRING"
+        },
+
+        {
+          "mode": "NULLABLE",
+          "name": "LGCY_PRIM_TXAUTH_ID",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "LGCY_PRIM_TAX_ID",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "PREV_TAX_ID",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "PRIOR_YR_DELQ_FLG",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "MAN_RSRCH_CD",
+          "type": "STRING"
+        },
+        {
+          "mode": "REPEATED",
+          "name": "BILLS",
+          "type": "RECORD",
+          "fields": [
+
+
+
+            {
+              "mode": "NULLABLE",
+              "name": "BILL_TYP",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "TAX_BILL_BGN_YR",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "TAX_BILL_END_YR",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "TXAUTH_TAX_FOR_BGN_YR",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "TXAUTH_TAX_FOR_END_YR",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "TXAUTH_BILL_TAX_ID",
+              "type": "STRING"
+            },
+
+
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_PLAN_ID",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_PLAN_CD",
+              "type": "STRING"
+            },
+
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_PLAN_STAT_CD",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "ORIG_SRC_CD",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "BILL_CD",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "BILL_STAT_CD",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "BILL_UID",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "MAN_RSRCH_CD",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_PLAN_DFLT_DT",
+              "type": "DATETIME"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_PLAN_LAST_PAY_DT",
+              "type": "DATETIME"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_PLAN_UNPD_BAL_AMT",
+              "type": "FLOAT64"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "PYMT_STAT_CD",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "BILL_EXMPT_FLG",
+              "type": "STRING"
+            },
+
+            {
+              "mode": "REPEATED",
+              "name": "INSTALLMENTS",
+              "type": "RECORD",
+              "fields": [
+
+
+                {
+                  "mode": "NULLABLE",
+                  "name": "INSTL_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "TAX_BILL_ID",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "TAX_PYMT_SRC_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "DELQ_DT",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "PD_DT",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "TXAUTH_POST_DT",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "MAIL_DT",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "TXAUTH_TAX_SRCH_DT",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "TXAUTH_FILE_TYP",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "ORIG_SRC_CD",
+                  "type": "STRING"
+                },
+
+                {
+                  "mode": "NULLABLE",
+                  "name": "FILE_CRTE_DT",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "FILE_AQRD_DT",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "MAN_RSRCH_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "DELAY_BILL_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "TXAUTH_ZERO_AMT_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "RDMPTN_SPCL_DOC_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "PAYEE_ID",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "STAT_CD",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "BILL_EXMPT_FLG",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "NSF_FLG",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "REPEATED",
+                  "name": "AMOUNT",
+                  "type": "RECORD",
+                  "fields": [
+
+                    {
+                      "mode": "NULLABLE",
+                      "name": "BILL_AMT_TYP",
+                      "type": "STRING"
+                    },
+                    {
+                      "mode": "NULLABLE",
+                      "name": "CRNCY_TYP",
+                      "type": "STRING"
+                    },
+                    {
+                      "mode": "NULLABLE",
+                      "name": "BILL_AMT",
+                      "type": "FLOAT64"
+                    },
+                    {
+                      "mode": "NULLABLE",
+                      "name": "GOOD_THRU_DT",
+                      "type": "DATETIME"
+                    }
+
+                  ]
+
+                }
+
+              ]
+            }
+          ]
+        }
+      ]
+    }
+
+
+  ]
+}
