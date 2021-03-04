@@ -56,3 +56,7 @@ bq query --nouse_legacy_sql "delete from exploratory.pas_data_temp where HASHKEY
 ('78a1a94a5666d20483922a481e24f442a364163471773c7a6b11b8094d400d01', \
 '990041b14ce6399d9221fcd67c38b61b6f72f760c784b53bf6d1f685f5ef15ca' , \
 '44cf0474f873a390856b9483384286d2ae63f32b688f3fe018425df29aaf562e')"
+
+
+bq mk --table exploratory.pas_nested_table ./src/main/resources/schema/pas-nested-schema-commandline.json
+
