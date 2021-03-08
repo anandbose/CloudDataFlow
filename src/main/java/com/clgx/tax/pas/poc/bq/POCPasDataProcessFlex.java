@@ -1,31 +1,32 @@
 
 package com.clgx.tax.pas.poc.bq;
 
-import com.clgx.tax.pas.poc.bq.model.output.CombinedRecordsets;
-import com.clgx.tax.pas.poc.bq.model.output.bqSchema;
-import com.clgx.tax.pas.poc.bq.pipeline.BQReadWrite;
 import com.clgx.tax.pas.poc.bq.config.FlexPipelineOptions;
-import com.clgx.tax.pas.poc.bq.model.input.*;
-import com.clgx.tax.pas.poc.bq.model.output.Parcel;
 import com.clgx.tax.pas.poc.bq.mappers.MaptoPasPrcl;
 import com.clgx.tax.pas.poc.bq.mappers.MaptoPrclOwn;
+import com.clgx.tax.pas.poc.bq.model.input.*;
+import com.clgx.tax.pas.poc.bq.pipeline.BQReadWrite;
+import com.google.api.services.bigquery.model.TableRow;
 import org.apache.beam.sdk.Pipeline;
-import org.apache.beam.sdk.extensions.jackson.AsJsons;
 import org.apache.beam.sdk.io.TextIO;
+import org.apache.beam.sdk.io.gcp.bigquery.BigQueryIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.options.ValueProvider;
 import org.apache.beam.sdk.transforms.DoFn;
-import org.apache.beam.sdk.transforms.MapElements;
+import org.apache.beam.sdk.transforms.Filter;
 import org.apache.beam.sdk.transforms.ParDo;
+import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.transforms.join.CoGbkResult;
 import org.apache.beam.sdk.transforms.join.CoGroupByKey;
 import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.TupleTag;
-import org.apache.beam.sdk.values.TypeDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class POCPasDataProcessFlex {
 
@@ -186,9 +187,9 @@ public class POCPasDataProcessFlex {
          *
          */
 
-        PCollection<KV<String, bqSchema>> YesterdaysBQData = BQReadWrite.readBQdata(
+     /*   PCollection<KV<String, bqSchema>> YesterdaysBQData = BQReadWrite.readBQdata(
                 "clgx-dtetl-spark-dev-fc0e","exploratory","pas_data_temp",p1,options.getPartitionDate()
-        );
+        );*/
 
 
         /**
@@ -203,7 +204,6 @@ public class POCPasDataProcessFlex {
         final TupleTag<PasBills> billtuple = new TupleTag<>();
         final TupleTag<PasBillsInst> insttuple = new TupleTag<>();
         final TupleTag<PasBillAmt> amttuple = new TupleTag<>();
-        final TupleTag<bqSchema> bqSchemaType = new TupleTag<>();
         /**
          * Step 2 Join the tables
          */
@@ -211,46 +211,91 @@ public class POCPasDataProcessFlex {
         PCollection<KV<String, CoGbkResult>> groupedCollection = KeyedPCollectionTuple
                 .of(pasPrcltuple,parcels)
                 .and(pasprclowntuple,parcelOwners)
-                .and(bqSchemaType,YesterdaysBQData)
                 .and(lientuple,parcelLiens)
                 .and(billtuple,parcelBills)
                 .and(insttuple,parcelBillInstallments)
                 .and(amttuple,parcelBillAmounts)
                 .apply("Join-Data-Via-PRCLkey", CoGroupByKey.create());
 
-        /**
-         *
-         * Identify the differential records
-         *
-         */
 
-        PCollection<KV<String,CombinedRecordsets>> differentialRecords = BQReadWrite.generateNewRecords("clgx-dtetl-spark-dev-fc0e","exploratory","pas_data_temp",groupedCollection,
-                pasPrcltuple,
-                pasprclowntuple ,
-                lientuple,
-                billtuple ,
-                insttuple,
-                amttuple,
-                bqSchemaType
-        );
 
-        /**
-         * Take the differential records and create the parcel object and installment object
-         *
-         */
 
 
         /*Write to BQ*/
-        BQReadWrite.writetoBQ("clgx-dtetl-spark-dev-fc0e","exploratory","pas_data_temp",differentialRecords,
-         options.getDays() );
+        PCollection<TableRow> bqrows =
+                groupedCollection.apply("Create the BQ Rows", ParDo.of(new DoFn<KV<String, CoGbkResult>,TableRow>(){
+                    @ProcessElement
+                    public void processElement(@Element  KV<String,CoGbkResult> input, OutputReceiver<TableRow> out)
+                    {
+
+                        Iterable<PasPrcl> PasPrclrecs = input.getValue().getAll(pasPrcltuple);
+                        Iterable<PasPrclOwn> PasPrcslOwnrecs = input.getValue().getAll(pasprclowntuple);
+                        Iterable<PasLiens> PasLienrecs = input.getValue().getAll(lientuple);
+                        Iterable<PasBills> PasBillrecs = input.getValue().getAll(billtuple);
+                        Iterable<PasBillsInst> PasBillInstrecs = input.getValue().getAll(insttuple);
+                        Iterable<PasBillAmt> PasAmtrecs = input.getValue().getAll(amttuple);
+                        //  Iterable<bqSchema> BqPasRecs = input.getValue().getAll(bqTuple);
+
+                        TableRow mainrow;
+                        List<TableRow> rows = new ArrayList<TableRow>();
+                        for (PasPrcl prcl: PasPrclrecs)
+                        {
+                            mainrow = new TableRow();
+                            mainrow.set("HASHKEYVAL", prcl.getClipNumber());
+                            mainrow.set("PARCELKEY",prcl.getPRCL_KEY());
+                            mainrow.set("CLIPNUMBER", prcl.getClipNumber());
+                            mainrow.set("SOR_CD",prcl.getSOR_CD());
+                            //Setting Address
+                            List<TableRow> Addresses = new ArrayList<>();
+                            List<TableRow> Owners = new ArrayList<>();
+                            List<TableRow> Liens = new ArrayList<>();
+                            BQReadWrite createBQRecs = new BQReadWrite();
+
+                            Addresses.add(createBQRecs.getAddressMapping(prcl));
+
+                            for (PasPrclOwn owner: PasPrcslOwnrecs)
+                            {
+                                Owners.add(createBQRecs.getOwmerMapping(owner));
+
+                            }
+                            for (PasLiens lien : PasLienrecs)
+                            {
+                                Liens.add(createBQRecs.getLienMapping(lien,PasBillrecs,PasBillInstrecs,PasAmtrecs));
+                            }
+                            mainrow.set("OWNERS",Owners);
+                            mainrow.set("ADDRESS",Addresses);
+                            mainrow.set("LIENS",Liens);
+                            rows.add(mainrow);
+
+                        }
+                        for(TableRow individualrow : rows)
+                        {
+                            out.output(individualrow);
+                        }
+                    }
+                }));
+
+        //write the rows
+        bqrows. apply("Filter only TXA" , Filter.by(new SerializableFunction<TableRow, Boolean>() {
+            @Override
+            public Boolean apply(TableRow input) {
+
+                return ((String)input.get("SOR_CD")).equals("TXA") ? Boolean.TRUE:Boolean.FALSE;
+            }
+        }))
+                .  apply("Write to bigquery", BigQueryIO.writeTableRows()
+                        .to(new BQReadWrite("clgx-dtetl-spark-dev-fc0e","exploratory","pas_nested_table_04019")
+                                .getTableReference())
+                        //  .withSchema()
+                        .withJsonSchema(new BQReadWrite().getJsonTableSchema())
+                        //  .withSchema(bqTestPasSchema.getPasSchema())
+                        //      .withTimePartitioning(new TimePartitioning().setType("DAY").setField("GOOD_THRU_DT").setRequirePartitionFilter(true))
+                        .withCreateDisposition(BigQueryIO.Write.CreateDisposition.CREATE_IF_NEEDED)
+                        .withWriteDisposition(BigQueryIO.Write.WriteDisposition.WRITE_TRUNCATE))
+        ;
         //convert the differential records to Json string and write the records
 
-        differentialRecords.apply("Map to parcel",MapElements
-                .into(TypeDescriptor.of(Parcel.class))
-                .via((KV<String, CombinedRecordsets> kvRec) ->  kvRec.getValue().getPrcl())
-        ).apply("ConvertToJson" ,  AsJsons.of(Parcel.class))
-        .apply("Write to File",TextIO.write().withoutSharding().to(ValueProvider.StaticValueProvider.of(options.getOutputFileName()+"-elastic.txt")))
-        ;
+
 
         p1.run();
     }
