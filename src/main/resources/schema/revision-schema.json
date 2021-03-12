@@ -1,0 +1,15 @@
+{
+  "fields": [
+    {
+      "mode": "REQUIRED",
+      "name": "CURRENTREVISION",
+      "type": "STRING"
+    },
+    {
+      "mode": "REQUIRED",
+      "name": "CHANGEDTIME",
+      "type": "DATETIME"
+    }
+
+  ]
+}

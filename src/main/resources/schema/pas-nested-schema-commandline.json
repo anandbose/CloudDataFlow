@@ -20,7 +20,7 @@
       "name": "CLIPNUMBER",
       "type": "STRING"
     },
-    
+
     {
       "mode": "NULLABLE",
       "name": "GEO_SRC_CD",

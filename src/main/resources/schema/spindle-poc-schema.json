@@ -1,0 +1,300 @@
+{
+  "fields": [
+    {
+      "mode": "REQUIRED",
+      "name": "assessorsParcelNumber",
+      "type": "STRING"
+    },
+
+
+
+    {
+      "name": "propertyAddress",
+      "type" : "RECORD",
+      "mode" : "REPEATED",
+      "fields" : [
+
+
+
+
+        {
+          "mode": "NULLABLE",
+          "name": "streetNumber",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "streetName",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "city",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "state",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "zip",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "mode": "REPEATED",
+      "name": "propertyOwner",
+      "type": "RECORD",
+      "fields": [
+        {
+          "name": "ownersFullName",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        },
+
+        {
+          "name": "ownersType",
+          "type": "STRING",
+          "mode": "NULLABLE"
+        }
+
+      ]
+    },
+    {
+      "name": "liens",
+      "type": "RECORD",
+      "mode": "REPEATED",
+      "fields": [
+
+        {
+          "mode": "NULLABLE",
+          "name": "taxCollectorId",
+          "type": "NUMERIC"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "taxId",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "taxCollectorIdCounty",
+          "type": "NUMERIC"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "taxIdCounty",
+          "type": "STRING"
+        },
+        {
+          "mode": "NULLABLE",
+          "name": "priorYearDelinquenciesExist",
+          "type": "BOOL"
+        },
+
+        {
+          "mode": "REPEATED",
+          "name": "alternateTaxIds",
+          "type": "RECORD",
+          "fields": [
+            {
+              "mode": "NULLABLE",
+              "name": "taxIdType",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "taxId",
+              "type": "STRING"
+            }
+          ]
+        },
+
+        {
+          "mode": "REPEATED",
+          "name": "bills",
+          "type": "RECORD",
+          "fields": [
+
+
+
+            {
+              "mode": "NULLABLE",
+              "name": "taxYearBegin",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "taxYearEnd",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "taxYearForBegin",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "taxYearForEnd",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "billType",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "billTaxId",
+              "type": "STRING"
+            },
+
+
+            {
+              "mode": "NULLABLE",
+              "name": "paymentPlanId",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "paymentPlanCode",
+              "type": "STRING"
+            },
+
+            {
+              "mode": "NULLABLE",
+              "name": "paymentPlanStatus",
+              "type": "STRING"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "paymentDefaultDate",
+              "type": "DATETIME"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "paymentPlanLastPaymentDate",
+              "type": "DATETIME"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "paymentPlanUnpaidBalance",
+              "type": "FLOAT64"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "billExempt",
+              "type": "BOOL"
+            },
+            {
+              "mode": "NULLABLE",
+              "name": "additionalPassThrough",
+              "type": "STRING"
+            },
+            {
+              "mode": "REPEATED",
+              "name": "installments",
+              "type": "RECORD",
+              "fields": [
+
+
+                {
+                  "mode": "NULLABLE",
+                  "name": "installment",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "paymentStatus",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "postedDate",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "delinquentDate",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "paidDate",
+                  "type": "DATETIME"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "taxBillId",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "paymentSource",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "zeroAmountReason",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "NULLABLE",
+                  "name": "redemptionSpecialDocumentCode",
+                  "type": "STRING"
+                },
+                {
+                  "mode": "REPEATED",
+                  "name": "notes",
+                  "type": "RECORD",
+                  "fields": [
+
+                    {
+                      "mode": "NULLABLE",
+                      "name": "noteCodes",
+                      "type": "STRING"
+                    }
+                  ]
+                },
+
+
+                {
+                  "mode": "REPEATED",
+                  "name": "amounts",
+                  "type": "RECORD",
+                  "fields": [
+
+                    {
+                      "mode": "NULLABLE",
+                      "name": "amountType",
+                      "type": "STRING"
+                    },
+
+                    {
+                      "mode": "NULLABLE",
+                      "name": "amount",
+                      "type": "FLOAT64"
+                    },
+                    {
+                      "mode": "NULLABLE",
+                      "name": "amountGoodThroughDate",
+                      "type": "DATETIME"
+                    }
+
+                  ]
+
+                }
+
+              ]
+            }
+          ]
+        }
+      ]
+    }
+
+
+  ]
+}
