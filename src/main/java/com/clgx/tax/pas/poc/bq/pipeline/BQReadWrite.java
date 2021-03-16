@@ -19,6 +19,7 @@ import java.util.List;
 
 public class BQReadWrite implements Serializable {
     private   final String PAS_SCHEMA_FILE_PATH = "schema/pas-nested-schema.json";
+    private  final String REV_SCHEMA_PATH = "schema/revision-schema.json";
     private    String projectId;
     private     String dataSet;
     private    String tableName;
@@ -62,10 +63,15 @@ public class BQReadWrite implements Serializable {
     public   String getJsonTableSchema()
     {
         String jsonSchema=null;
+        String resourcePath = PAS_SCHEMA_FILE_PATH;
+        if (tableName!=null && tableName.matches("(.*)revision"))
+        {
+            resourcePath = REV_SCHEMA_PATH;
+        }
         try {
             jsonSchema =
                     Resources.toString(
-                            Resources.getResource(PAS_SCHEMA_FILE_PATH), StandardCharsets.UTF_8);
+                            Resources.getResource(resourcePath), StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error(
                     "Unable to read {} file from the resources folder!",PAS_SCHEMA_FILE_PATH, e);
@@ -76,6 +82,17 @@ public class BQReadWrite implements Serializable {
     /***Create mappers here
      *
      */
+    /***Create mappers here
+     *
+     */
+
+  /*  public   TableRow getParcelMapping(PasPrcl prcl)
+    {
+        TableRow parcelRow = new TableRow();
+
+        return parcelRow;
+    }*/
+
 
     public   TableRow getAddressMapping(PasPrcl prcl)
     {
@@ -230,7 +247,7 @@ public class BQReadWrite implements Serializable {
 
     private   String convertToDateTime(String input)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss.SSSSSS a");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss");
 
         try {
             if(input==null || (input!=null && input.trim().equals("")))
@@ -238,6 +255,7 @@ public class BQReadWrite implements Serializable {
                 return null;
                // LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSSS"));
             }
+            log.info("The input date is..." + input);
             String[] main = input.split(" ");
             String[] str = main[0].split("/");
             StringBuffer sb = new StringBuffer().append(Strings.padStart(str[0], 2, '0'));
@@ -254,8 +272,8 @@ public class BQReadWrite implements Serializable {
         }
         catch (Exception ex)
         {
-            System.out.println("Error in parsing date::"+input);
-            ex.printStackTrace();
+            log.error("Error in parsing date::"+input);
+          //  ex.printStackTrace();
             return LocalDateTime.now().format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSSS"));
 
         }

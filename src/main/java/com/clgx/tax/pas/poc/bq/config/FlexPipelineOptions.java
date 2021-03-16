@@ -35,6 +35,8 @@ public interface FlexPipelineOptions extends PipelineOptions {
     String getPartitionDate();
     void setPartitionDate(String partitionDate);
 
+
+
     // static String elasticUrl = "https://cc317dd9125743c9a2f563cf4d48dd06.int-ece-main-green-proxy.elastic.int.idap.clgxdata.com:9243";
   //  static String userName = "clgx_service";
   //  static String elasticPassword = "clgx_service_r0ck$";

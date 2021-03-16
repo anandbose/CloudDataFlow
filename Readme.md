@@ -58,5 +58,23 @@ bq query --nouse_legacy_sql "delete from exploratory.pas_data_temp where HASHKEY
 '44cf0474f873a390856b9483384286d2ae63f32b688f3fe018425df29aaf562e')"
 
 
-bq mk --table exploratory.pas_nested_table ./src/main/resources/schema/pas-nested-schema-commandline.json
+bq mk --table exploratory.pas_nested_table_04019_R1 ./src/main/resources/schema/pas-nested-schema-commandline.json
+
+bq mk --table exploratory.pas_nested_table_04019_R2 ./src/main/resources/schema/pas-nested-schema-commandline.json
+
+bq mk --table exploratory.pas_nested_table_04019_revision ./src/main/resources/schema/revision-schema-commandline
+
+#spindle table
+bq mk --table exploratory.spindle_nested_table  ./src/main/resources/schema/spindle-poc-schema-commandline
+ 
+
+#query idap table
+bq query --nouse_legacy_sql 'select count(*) from `clgx-idap-bigquery-dev-71f0.edr_pmd_property_pipeline.vw_ext_clip_address_xref`'
+
+bq query --nouse_legacy_sql 'select clip,apnUnformatted,eapFipsCountyCode from `clgx-idap-bigquery-dev-71f0.edr_pmd_property_pipeline.vw_ext_clip_address_xref` LIMIT 10'
+
+bq query --nouse_legacy_sql 'select clip,apnUnformatted,eapFipsCountyCode from `clgx-idap-bigquery-dev-71f0.edr_pmd_property_pipeline.vw_ext_clip_address_xref`  where eapFipsCountyCode="06037" LIMIT 10'
+
+bq query --nouse_legacy_sql 'select distinct(eapFipsCountyCode) as FipsCode from`clgx-idap-bigquery-dev-71f0.edr_pmd_property_pipeline.vw_ext_clip_address_xref` where eapFipsCountyCode like "04%"  '
+
 

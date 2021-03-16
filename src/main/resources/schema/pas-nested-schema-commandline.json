@@ -55,19 +55,23 @@
       "mode": "NULLABLE",
       "name": "LAND_TYP_CD",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "LAND_USE_NM",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "PRPTY_SOLD_DT",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "LAST_IMPRV_YR",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "OWN_ACQ_DT",
       "type": "STRING"
@@ -106,27 +110,33 @@
       "mode": "NULLABLE",
       "name": "ASSESS_PRCL_ID",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "ASSESS_YR",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "FILE_CRTE_DT",
       "type": "DATETIME"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "NON_ADV_PRPTY_DESC",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "NON_ADV_PRPTY_VALUE_AMT",
       "type": "FLOAT64"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "MAN_RSRCH_CD",
       "type": "STRING"
-    },    {
+    },
+    {
       "mode": "NULLABLE",
       "name": "UAT_ADDR_TAG_ID",
       "type": "STRING"
@@ -155,11 +165,13 @@
       "mode": "NULLABLE",
       "name": "LAND_TYP_NM",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "BLDG_CLS_NM",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "NGHBRHD_CD",
       "type": "STRING"
@@ -169,32 +181,42 @@
       "mode": "NULLABLE",
       "name": "GEO_CD_LATTD",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "GEO_CD_LONGTD",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "MAP_GRID_LOC_TXT",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "UNSCRB_SITUS_ADDR_TXT",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "UNSCRB_SITUS_ADDR_LN2_TXT",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "CNTY_ID",
       "type": "STRING"
-    }, {
+    },
+    {
       "mode": "NULLABLE",
       "name": "STATE_ID",
       "type": "STRING"
     },
-
+    {
+      "mode": "NULLABLE",
+      "name": "CURRENTREVISION",
+      "type": "STRING"
+    },
 
     {
       "name": "ADDRESS",
@@ -240,43 +262,53 @@
           "mode": "NULLABLE",
           "name": "UNIT_NBR_TXT",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "UNIT_NBR_END_TXT",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "PO_BOX_NBR_TXT",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "BOX_LOC_TXT",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "RR_CD",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "RR_NBR",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "NGHBRHD_NM",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "CITY_NM",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "CNTY_NM",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "POSTAL_CD",
           "type": "STRING"
-        },        {
+        },
+        {
           "mode": "NULLABLE",
           "name": "CNTRY_CD",
           "type": "STRING"
@@ -577,7 +609,7 @@
                 {
                   "mode": "NULLABLE",
                   "name": "TXAUTH_POST_DT",
-                  "type": "STRING"
+                  "type": "DATETIME"
                 },
                 {
                   "mode": "NULLABLE",
