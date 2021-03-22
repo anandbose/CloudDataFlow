@@ -1,6 +1,4 @@
-{
-  "fields":
-  [
+ [
     { "type": "STRING","mode": "NULLABLE", "name":"parcelKey"},
     { "type": "STRING","mode": "NULLABLE", "name":"sourceCode"},
     { "type": "STRING","mode": "NULLABLE", "name":"standardFormatControlKey"},
@@ -193,7 +191,6 @@
             { "type": "DATE","mode": "NULLABLE", "name":"paymentPlanDefaultDate" },
             { "type": "DATE","mode": "NULLABLE", "name":"paymentPlanLastPaymentDate" },
             { "type": "FLOAT64","mode": "NULLABLE", "name":"paymentPlanUnpaidBalanceAmount" },
-            { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanStatusCode" },
             { "type": "STRING","mode": "NULLABLE", "name":"statusCode" },
             { "type": "STRING","mode": "NULLABLE", "name":"billExemptFlag" },
             { "type": "STRING","mode": "NULLABLE", "name":"identificationUserId" },
@@ -360,4 +357,4 @@
       ]
     }
   ]
-}
+
