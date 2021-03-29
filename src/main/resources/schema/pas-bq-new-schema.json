@@ -19,12 +19,12 @@
       { "type": "STRING","mode": "NULLABLE", "name":"poBoxNumberText"},
       { "type": "STRING","mode": "NULLABLE", "name":"poBoxLocationText"},
       { "type": "STRING","mode": "NULLABLE", "name":"ruralRouteCode"},
-      { "type": "STRING","mode": "NULLABLE", "name":"rulalRouteNumber"},
+      { "type": "STRING","mode": "NULLABLE", "name":"ruralRouteNumber"},
       { "type": "STRING","mode": "NULLABLE", "name":"neighborhoodName"},
       { "type": "STRING","mode": "NULLABLE", "name":"cityName"},
-      { "type": "STRING","mode": "NULLABLE", "name":"CountyName"},
+      { "type": "STRING","mode": "NULLABLE", "name":"countyName"},
       { "type": "STRING","mode": "NULLABLE", "name":"postalCode"},
-      { "type": "STRING","mode": "NULLABLE", "name":"CountryCode"},
+      { "type": "STRING","mode": "NULLABLE", "name":"countryCode"},
       { "type": "STRING","mode": "NULLABLE", "name":"stateCode"},
       { "type": "STRING","mode": "NULLABLE", "name":"stateSubCode"}
     ]},
@@ -108,13 +108,14 @@
         { "type": "STRING","mode": "NULLABLE", "name":"priorYearDelinquencyFlag"},
 
         { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentReasonCode"},
+        {"type": "STRING","mode": "NULLABLE", "name": "parcelSequenceNumber" },
 
-        {
+
+      {
           "name": "alternateTaxIds", "type": "RECORD", "mode": "REPEATED", "fields": [
           {"mode": "NULLABLE", "name": "taxIdType", "type": "STRING"},
 
-          {"mode": "NULLABLE", "name": "taxId", "type": "STRING"},
-          {"mode": "NULLABLE", "name": "parcelSequenceNumber", "type": "STRING"}
+          {"mode": "NULLABLE", "name": "taxId", "type": "STRING"}
           ]},
         {"mode": "REPEATED", "name": "bills", "type": "RECORD", "fields": [
                 { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode" },
