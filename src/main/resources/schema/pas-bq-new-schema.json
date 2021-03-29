@@ -1,10 +1,54 @@
 {
   "fields":
+
   [
     { "type": "STRING","mode": "NULLABLE", "name":"parcelKey"},
     { "type": "STRING","mode": "NULLABLE", "name":"sourceCode"},
     { "type": "STRING","mode": "NULLABLE", "name":"parcelType"},
     { "type": "STRING","mode": "NULLABLE", "name":"statusCode"},
+
+    { "type": "STRING","mode": "NULLABLE", "name":"geoSourceCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"fipsStateId"},
+    { "type": "STRING","mode": "NULLABLE", "name":"fipsCountyId"},
+    { "type": "STRING","mode": "NULLABLE", "name":"parcelUseCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"SurveyId"},
+    { "type": "STRING","mode": "NULLABLE", "name":"parcelSecondaryUseName"},
+    { "type": "STRING","mode": "NULLABLE", "name":"buildingClassCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"ConstructionYear"},
+    { "type": "STRING","mode": "NULLABLE", "name":"landTypeCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"landUseName"},
+    { "type": "DATETIME","mode": "NULLABLE", "name":"propertySoldDate"},
+    { "type": "STRING","mode": "NULLABLE", "name":"lastImprovementYear"},
+    { "type": "DATETIME","mode": "NULLABLE", "name":"ownerAcquisitionDate"},
+    { "type": "STRING","mode": "NULLABLE", "name":"easementTypeCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"propertyZoneCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"censusTrackCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"floodZoneCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"noCollectorFlag"},
+    { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"mobileHomeVinId"},
+    { "type": "STRING","mode": "NULLABLE", "name":"assessorParcelId"},
+    {"type": "STRING","mode": "NULLABLE", "name": "assessorParcelSeqNumber" },
+    { "type": "STRING","mode": "NULLABLE", "name":"assessmentYear"},
+    { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate"},
+    { "type": "STRING","mode": "NULLABLE", "name":"nonAdvancePropertyDescription"},
+    { "type": "FLOAT64","mode": "NULLABLE", "name":"nonAdvancePropertyValueAmount"},
+    { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode"},
+    { "type": "FLOAT64","mode": "NULLABLE", "name":"uatAddressTagId"},
+    { "type": "STRING","mode": "NULLABLE", "name":"parcelUseName"},
+    { "type": "STRING","mode": "NULLABLE", "name":"parcelSecondaryUseCode"},
+    { "type": "STRING","mode": "NULLABLE", "name":"fullExemptFlag"},
+    { "type": "STRING","mode": "NULLABLE", "name":"taxArea"},
+    { "type": "STRING","mode": "NULLABLE", "name":"landTypeName"},
+    { "type": "STRING","mode": "NULLABLE", "name":"buildingClassName"},
+    { "type": "STRING","mode": "NULLABLE", "name":"neighborhoodCode"},
+    { "type": "FLOAT64","mode": "NULLABLE", "name":"geoCodeLattitude"},
+    { "type": "FLOAT64","mode": "NULLABLE", "name":"geoCodeLongitude"},
+    { "type": "STRING","mode": "NULLABLE", "name":"mapGridLocationText"},
+    { "type": "STRING","mode": "NULLABLE", "name":"unscrubbedSitusAddressText"},
+    { "type": "STRING","mode": "NULLABLE", "name":"unscrubbedSitusAddressLine2Text"},
+    { "type": "STRING","mode": "NULLABLE", "name":"countyId"},
+    { "type": "STRING","mode": "NULLABLE", "name":"stateId"},
     {"name": "propertyAddress", "type" : "RECORD", "mode" : "REPEATED", "fields" : [
       { "type": "STRING","mode": "NULLABLE", "name":"streetPrefixDirectionCode"},
       { "type": "STRING","mode": "NULLABLE", "name":"streetNumberText"},
@@ -46,138 +90,99 @@
       { "type": "STRING","mode": "NULLABLE", "name":"ownerPercentage"}
     ]},
 
-    { "type": "STRING","mode": "NULLABLE", "name":"geoSourceCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"fipsStateId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"fipsCountyId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"parcelUseCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"SurveyId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"parcelSecondaryUseName"},
-    { "type": "STRING","mode": "NULLABLE", "name":"buildingClassCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"ConstructionYear"},
-    { "type": "STRING","mode": "NULLABLE", "name":"landTypeCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"landUseName"},
-    { "type": "DATETIME","mode": "NULLABLE", "name":"propertySoldDate"},
-    { "type": "STRING","mode": "NULLABLE", "name":"lastImprovementYear"},
-    { "type": "DATETIME","mode": "NULLABLE", "name":"ownerAcquisitionDate"},
-    { "type": "STRING","mode": "NULLABLE", "name":"easementTypeCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"propertyZoneCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"censusTrackCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"floodZoneCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"noCollectorFlag"},
-    { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"mobileHomeVinId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"assessorParcelId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"assessmentYear"},
-    { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate"},
-    { "type": "STRING","mode": "NULLABLE", "name":"nonAdvancePropertyDescription"},
-    { "type": "FLOAT64","mode": "NULLABLE", "name":"nonAdvancePropertyValueAmount"},
-    { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode"},
-    { "type": "FLOAT64","mode": "NULLABLE", "name":"uatAddressTagId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"parcelUseName"},
-    { "type": "STRING","mode": "NULLABLE", "name":"parcelSecondaryUseCode"},
-    { "type": "STRING","mode": "NULLABLE", "name":"fullExemptFlag"},
-    { "type": "STRING","mode": "NULLABLE", "name":"taxArea"},
-    { "type": "STRING","mode": "NULLABLE", "name":"landTypeName"},
-    { "type": "STRING","mode": "NULLABLE", "name":"buildingClassName"},
-    { "type": "STRING","mode": "NULLABLE", "name":"neighborhoodCode"},
-    { "type": "FLOAT64","mode": "NULLABLE", "name":"geoCodeLattitude"},
-    { "type": "FLOAT64","mode": "NULLABLE", "name":"geoCodeLongitude"},
-    { "type": "STRING","mode": "NULLABLE", "name":"mapGridLocationText"},
-    { "type": "STRING","mode": "NULLABLE", "name":"unscrubbedSitusAddressText"},
-    { "type": "STRING","mode": "NULLABLE", "name":"unscrubbedSitusAddressLine2Text"},
-    { "type": "STRING","mode": "NULLABLE", "name":"countyId"},
-    { "type": "STRING","mode": "NULLABLE", "name":"stateId"},
     {"name": "taxLiens", "type": "RECORD", "mode": "REPEATED", "fields": [
-        { "type": "STRING","mode": "NULLABLE", "name":"taxCollectorTaxId"},
-        { "type": "STRING","mode": "NULLABLE", "name":"taxCollectorId"},
-        { "type": "STRING","mode": "NULLABLE", "name":"countryCode"},
-        { "type": "STRING","mode": "NULLABLE", "name":"statusCode"},
-        { "type": "STRING","mode": "NULLABLE", "name":"standardFormatControlKey"},
-        { "type": "STRING","mode": "NULLABLE", "name":"parcelCommentKey"},
-        { "type": "STRING","mode": "NULLABLE", "name":"taxCollectorFileType"},
-        { "type": "STRING","mode": "NULLABLE", "name":"lienType"},
-        { "type": "STRING","mode": "NULLABLE", "name":"displayTaxIdFlag"},
-        { "type": "STRING","mode": "NULLABLE", "name":"municipalityCode"},
-        { "type": "STRING","mode": "NULLABLE", "name":"schoolDistrictCode"},
-        { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentFlag"},
-        { "type": "DATETIME","mode": "NULLABLE", "name":"pendingApportionmentDate"},
-        { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode"},
-        { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorId"},
-        { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorTaxId"},
-        { "type": "STRING","mode": "NULLABLE", "name":"previousTaxId"},
-        { "type": "STRING","mode": "NULLABLE", "name":"priorYearDelinquencyFlag"},
+      { "type": "STRING","mode": "NULLABLE", "name":"taxCollectorTaxId"},
+      { "type": "STRING","mode": "NULLABLE", "name":"taxCollectorId"},
+      { "type": "STRING","mode": "NULLABLE", "name":"countryCode"},
+      { "type": "STRING","mode": "NULLABLE", "name":"statusCode"},
+      { "type": "STRING","mode": "NULLABLE", "name":"standardFormatControlKey"},
+      { "type": "STRING","mode": "NULLABLE", "name":"parcelCommentKey"},
+      { "type": "STRING","mode": "NULLABLE", "name":"taxCollectorFileType"},
+      { "type": "STRING","mode": "NULLABLE", "name":"lienType"},
+      { "type": "STRING","mode": "NULLABLE", "name":"displayTaxIdFlag"},
+      { "type": "STRING","mode": "NULLABLE", "name":"municipalityCode"},
+      { "type": "STRING","mode": "NULLABLE", "name":"schoolDistrictCode"},
+      { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentFlag"},
+      { "type": "DATETIME","mode": "NULLABLE", "name":"pendingApportionmentDate"},
+      { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode"},
+      { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorId"},
+      { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorTaxId"},
+      { "type": "STRING","mode": "NULLABLE", "name":"previousTaxId"},
+      { "type": "STRING","mode": "NULLABLE", "name":"priorYearDelinquencyFlag"},
 
-        { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentReasonCode"},
-        {"type": "STRING","mode": "NULLABLE", "name": "parcelSequenceNumber" },
+      { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentReasonCode"},
+
 
 
       {
-          "name": "alternateTaxIds", "type": "RECORD", "mode": "REPEATED", "fields": [
-          {"mode": "NULLABLE", "name": "taxIdType", "type": "STRING"},
+        "name": "alternateTaxIds", "type": "RECORD", "mode": "REPEATED", "fields": [
+        {"mode": "NULLABLE", "name": "taxIdType", "type": "STRING"},
 
-          {"mode": "NULLABLE", "name": "taxId", "type": "STRING"}
+        {"mode": "NULLABLE", "name": "taxId", "type": "STRING"}
+      ]},
+      {"mode": "REPEATED", "name": "bills", "type": "RECORD", "fields": [
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"standardFormatControlKey" },
+        { "type": "STRING","mode": "NULLABLE", "name":"commentKey" },
+        { "type": "STRING","mode": "NULLABLE", "name":"installmentCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"taxBillId" },
+        { "type": "STRING","mode": "NULLABLE", "name":"identificationExceptionCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"taxPaymentSourceCode" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"delinquencyDate" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"paidDate" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"collectorPostingDate" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"mailingDate" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"collectorTaxSearchDate" },
+        { "type": "STRING","mode": "NULLABLE", "name":"collectorFileType" },
+        { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate" },
+        { "type": "DATETIME","mode": "NULLABLE", "name":"fileAcquiredDate" },
+        { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"delayBillCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"collectorZeroAmountCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"redemptionSpecialDocCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"payeeId" },
+        { "type": "STRING","mode": "NULLABLE", "name":"statusCode" },
+        { "type": "STRING","mode": "NULLABLE", "name":"nonSufficientFundsFee" },
+
+
+
+        {"mode": "REPEATED", "name": "installments", "type": "RECORD", "fields": [
+          { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode" },
+          { "type": "STRING","mode": "NULLABLE", "name":"installmentCode" },
+          { "type": "STRING","mode": "NULLABLE", "name":"taxPaymentSourceCode" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"delinquencyDate" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"paidDate" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"collectorPostingDate" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"mailingDate" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"collectorTaxSearchDate" },
+          { "type": "STRING","mode": "NULLABLE", "name":"collectorFileType" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate" },
+          { "type": "DATETIME","mode": "NULLABLE", "name":"fileAcquiredDate" },
+          { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode" },
+          { "type": "STRING","mode": "NULLABLE", "name":"delayBillCode" },
+          { "type": "STRING","mode": "NULLABLE", "name":"collectorZeroAmountCode" },
+          { "type": "STRING","mode": "NULLABLE", "name":"redemptionSpecialDocCode" },
+          { "type": "STRING","mode": "NULLABLE", "name":"payeeId" },
+          { "type": "STRING","mode": "NULLABLE", "name":"nonSufficientFundsFee" },
+          {"mode": "REPEATED", "name": "amounts", "type": "RECORD", "fields": [
+            { "type": "STRING","mode": "NULLABLE", "name":"billAmountType" },
+            { "type": "STRING","mode": "NULLABLE", "name":"currencyType" },
+            { "type": "FLOAT64","mode": "NULLABLE", "name":"billAmount" },
+            { "type": "DATETIME","mode": "NULLABLE", "name":"goodThruDate" }
           ]},
-        {"mode": "REPEATED", "name": "bills", "type": "RECORD", "fields": [
-                { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"standardFormatControlKey" },
-                { "type": "STRING","mode": "NULLABLE", "name":"commentKey" },
-                { "type": "STRING","mode": "NULLABLE", "name":"installmentCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"taxBillId" },
-                { "type": "STRING","mode": "NULLABLE", "name":"identificationExceptionCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"taxPaymentSourceCode" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"delinquencyDate" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"paidDate" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"collectorPostingDate" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"mailingDate" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"collectorTaxSearchDate" },
-                { "type": "STRING","mode": "NULLABLE", "name":"collectorFileType" },
-                { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate" },
-                { "type": "DATETIME","mode": "NULLABLE", "name":"fileAcquiredDate" },
-                { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"delayBillCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"collectorZeroAmountCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"redemptionSpecialDocCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"payeeId" },
-                { "type": "STRING","mode": "NULLABLE", "name":"statusCode" },
-                { "type": "STRING","mode": "NULLABLE", "name":"nonSufficientFundsFee" },
+          {"mode": "REPEATED", "name": "notes", "type": "RECORD", "fields": [
+            { "type": "STRING","mode": "NULLABLE", "name":"noteCodes" }
+          ]}
 
+        ]
+        }
 
-
-                {"mode": "REPEATED", "name": "installments", "type": "RECORD", "fields": [
-                      { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"installmentCode" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"taxPaymentSourceCode" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"delinquencyDate" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"paidDate" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"collectorPostingDate" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"mailingDate" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"collectorTaxSearchDate" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"collectorFileType" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate" },
-                        { "type": "DATETIME","mode": "NULLABLE", "name":"fileAcquiredDate" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"delayBillCode" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"collectorZeroAmountCode" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"redemptionSpecialDocCode" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"payeeId" },
-                        { "type": "STRING","mode": "NULLABLE", "name":"nonSufficientFundsFee" },
-                        {"mode": "REPEATED", "name": "amounts", "type": "RECORD", "fields": [
-                            { "type": "STRING","mode": "NULLABLE", "name":"billAmountType" },
-                            { "type": "STRING","mode": "NULLABLE", "name":"currencyType" },
-                            { "type": "FLOAT64","mode": "NULLABLE", "name":"billAmount" },
-                            { "type": "DATETIME","mode": "NULLABLE", "name":"goodThruDate" }
-                        ]},
-                        {"mode": "REPEATED", "name": "notes", "type": "RECORD", "fields": [
-                            { "type": "STRING","mode": "NULLABLE", "name":"noteCodes" }
-                        ]}
-
-                      ]
-                    }
-
-              ]
-            }
       ]
+      }
+    ]
     }
   ]
+
+
 }
