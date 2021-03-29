@@ -63,9 +63,12 @@ bq mk --table exploratory.pas_nested_table_04019_R1 ./src/main/resources/schema/
 bq mk --table exploratory.pas_nested_table_04019_R2 ./src/main/resources/schema/pas-nested-schema-commandline.json
 
 bq mk --table exploratory.pas_nested_table_04019_revision ./src/main/resources/schema/revision-schema-commandline
+# Pas Schema for bq
+bq rm --table 
 
 #spindle table
-bq mk --table exploratory.spindle_nested_table  ./src/main/resources/schema/spindle-poc-schema-commandline
+bq rm --table exploratory.pas_new_schema_test
+bq mk --table exploratory.pas_new_schema_test ./src/main/resources/schema/pas-bq-new-schema-commandline.json
  
 
 #query idap table
