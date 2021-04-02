@@ -104,13 +104,13 @@
       { "type": "STRING","mode": "NULLABLE", "name":"schoolDistrictCode"},
       { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentFlag"},
       { "type": "DATETIME","mode": "NULLABLE", "name":"pendingApportionmentDate"},
-      { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode"},
-      { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorId"},
+     { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorId"},
       { "type": "STRING","mode": "NULLABLE", "name":"legacyPrimaryCollectorTaxId"},
       { "type": "STRING","mode": "NULLABLE", "name":"previousTaxId"},
       { "type": "STRING","mode": "NULLABLE", "name":"priorYearDelinquencyFlag"},
 
       { "type": "STRING","mode": "NULLABLE", "name":"pendingApportionmentReasonCode"},
+
 
 
 
@@ -121,30 +121,26 @@
         {"mode": "NULLABLE", "name": "taxId", "type": "STRING"}
       ]},
       {"mode": "REPEATED", "name": "bills", "type": "RECORD", "fields": [
-        { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"standardFormatControlKey" },
-        { "type": "STRING","mode": "NULLABLE", "name":"commentKey" },
-        { "type": "STRING","mode": "NULLABLE", "name":"installmentCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"taxBillId" },
-        { "type": "STRING","mode": "NULLABLE", "name":"identificationExceptionCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"taxPaymentSourceCode" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"delinquencyDate" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"paidDate" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"collectorPostingDate" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"mailingDate" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"collectorTaxSearchDate" },
-        { "type": "STRING","mode": "NULLABLE", "name":"collectorFileType" },
-        { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"fileCreateDate" },
-        { "type": "DATETIME","mode": "NULLABLE", "name":"fileAcquiredDate" },
-        { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"delayBillCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"collectorZeroAmountCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"redemptionSpecialDocCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"payeeId" },
-        { "type": "STRING","mode": "NULLABLE", "name":"statusCode" },
-        { "type": "STRING","mode": "NULLABLE", "name":"nonSufficientFundsFee" },
 
+        { "type": "STRING","mode": "NULLABLE", "name":"billType"},
+        { "type": "STRING","mode": "NULLABLE", "name":"taxBillBeginningYear"},
+        { "type": "STRING","mode": "NULLABLE", "name":"taxBillEndingYear"},
+        { "type": "STRING","mode": "NULLABLE", "name":"collectorTaxForBeginningYear"},
+        { "type": "STRING","mode": "NULLABLE", "name":"collectorTaxForEndingYear"},
+        { "type": "STRING","mode": "NULLABLE", "name":"collectorBillTaxId"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanId"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanStatusCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"originatingSourceCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"billCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"billStatusCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"manualResearchCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanDefaultDate"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanLastPaymentDate"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPlanUnpaidBalanceAmount"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentStatusCode"},
+        { "type": "STRING","mode": "NULLABLE", "name":"billExemptFlag"},
+        { "type": "STRING","mode": "NULLABLE", "name":"paymentPassThru"},
 
 
         {"mode": "REPEATED", "name": "installments", "type": "RECORD", "fields": [
@@ -172,7 +168,7 @@
             { "type": "DATETIME","mode": "NULLABLE", "name":"goodThruDate" }
           ]},
           {"mode": "REPEATED", "name": "notes", "type": "RECORD", "fields": [
-            { "type": "STRING","mode": "NULLABLE", "name":"noteCodes" }
+            { "type": "STRING","mode": "NULLABLE", "name":"noteType" }
           ]}
 
         ]
